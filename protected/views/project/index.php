@@ -51,7 +51,7 @@ $this->widget('bootstrap.widgets.TbWizard', array(
 	'type' => 'tabs', // 'tabs' or 'pills'
 	'tabs' => array(
 		array(
-			'label' => 'Borrower Info', 
+			'label' => 'Client Info', 
 			'content'=>$this->renderPartial('tabs/_borrowerinfo',compact('supplierModel','model'),1),
 			'active' => true,
 		),

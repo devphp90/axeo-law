@@ -29,8 +29,8 @@
 	                	//'visible'=>Yii::app()->user->isAdmin(),
 	                ),
 					array(
-	                	'label'=>Yii::t('app','Borrower'), 
-	                	'url'=>array('/admin/borrower'),
+	                	'label'=>Yii::t('app','Clients'), 
+	                	'url'=>array('/admin/client'),
 	                	//'visible'=>Yii::app()->user->isAdmin(),
 	                ),
 					array(

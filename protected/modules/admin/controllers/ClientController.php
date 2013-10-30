@@ -1,6 +1,6 @@
 <?php
 
-class LoanController extends AdminController {
+class ClientController extends AdminController {
 
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -25,7 +25,7 @@ class LoanController extends AdminController {
     public function accessRules() {
         return array(
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('index', 'delete', 'view', 'update', 'create', 'clientview'),
+                'actions' => array('index', 'delete', 'view', 'update', 'create', 'bulkDelete'),
                 'users' => array('admin'),
             ),
             array('deny', // deny all users
@@ -49,13 +49,13 @@ class LoanController extends AdminController {
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
     public function actionCreate() {
-        $model = new Loan;
+        $model = new Client();
 
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
-        if (isset($_POST['Loan'])) {
-            $model->attributes = $_POST['Loan'];
+        if (isset($_POST['Client'])) {
+            $model->attributes = $_POST['Client'];
             if ($model->save())
                 $this->redirect(array('view', 'id' => $model->id));
         }
@@ -76,8 +76,8 @@ class LoanController extends AdminController {
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
-        if (isset($_POST['Loan'])) {
-            $model->attributes = $_POST['Loan'];
+        if (isset($_POST['Client'])) {
+            $model->attributes = $_POST['Client'];
             if ($model->save())
                 $this->redirect(array('view', 'id' => $model->id));
         }
@@ -105,30 +105,24 @@ class LoanController extends AdminController {
             throw new CHttpException(400, 'Invalid request. Please do not repeat this request again.');
     }
 
-    /**
-     * Lists all models.
-     */
-    public function actionClientView($id) {
-        $model = new Loan('search');
-        $model->unsetAttributes();  // clear any default values
-        if (isset($_GET['Loan']))
-            $model->attributes = $_GET['Loan'];
+    public function actionBulkDelete() {
+        $ids = Yii::app()->request->getPost('ids');
 
+        $criteria = new CDbCriteria;
+        $criteria->addInCondition('id', $ids);
+        Client::model()->deleteAll($criteria);
 
-        $this->render('clientview', array(
-            'model' => $model,
-            'id' => $id,
-        ));
+        Yii::app()->end();
     }
 
     /**
      * Lists all models.
      */
     public function actionIndex() {
-        $model = new Loan('search');
+        $model = new Client('search');
         $model->unsetAttributes();  // clear any default values
-        if (isset($_GET['Loan']))
-            $model->attributes = $_GET['Loan'];
+        if (isset($_GET['Client']))
+            $model->attributes = $_GET['Client'];
 
         $this->render('index', array(
             'model' => $model,
@@ -141,7 +135,7 @@ class LoanController extends AdminController {
      * @param integer the ID of the model to be loaded
      */
     public function loadModel($id) {
-        $model = Loan::model()->findByPk($id);
+        $model = Client::model()->findByPk($id);
         if ($model === null)
             throw new CHttpException(404, 'The requested page does not exist.');
         return $model;
@@ -152,7 +146,7 @@ class LoanController extends AdminController {
      * @param CModel the model to be validated
      */
     protected function performAjaxValidation($model) {
-        if (isset($_POST['ajax']) && $_POST['ajax'] === 'loan-form') {
+        if (isset($_POST['ajax']) && $_POST['ajax'] === 'client-form') {
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }

@@ -1,18 +1,18 @@
 <?php
 
 /**
- * This is the model class for table "loan".
+ * This is the model class for table "clients".
  *
- * The followings are the available columns in table 'loan':
+ * The followings are the available columns in table 'clients':
  * @property integer $id
  * @property string $name
  */
-class Loan extends CActiveRecord {
+class Client extends CActiveRecord {
 
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
-     * @return Loan the static model class
+     * @return Client the static model class
      */
     public static function model($className = __CLASS__) {
         return parent::model($className);
@@ -22,7 +22,7 @@ class Loan extends CActiveRecord {
      * @return string the associated database table name
      */
     public function tableName() {
-        return 'loan';
+        return 'clients';
     }
 
     /**
@@ -32,14 +32,15 @@ class Loan extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('name', 'required'),
+            array('name, email', 'required'),
+            array('email', 'email'),
             array('name', 'length', 'max' => 255),
-            array('phone', 'length', 'max' => 255),
-            array('phone', 'match', 'pattern' => '/^[0-9]+$/'),
-            array('borrower_id', 'numerical', 'integerOnly' => true),
+            array('phone1', 'length', 'max' => 20),
+            array('skype', 'length', 'max' => 100),
+            array('facebookaddress', 'length', 'max' => 150), //added field for facebookaddress > ishit (softweb) : 10/17/13
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, name', 'safe', 'on' => 'search'),
+            array('id, name, email, phone1', 'safe', 'on' => 'search'),
         );
     }
 
@@ -60,7 +61,10 @@ class Loan extends CActiveRecord {
         return array(
             'id' => 'ID',
             'name' => 'Name',
-            'phone' => 'Phone',
+            'phone1' => 'Phone Number',
+            'email' => 'Email',
+            'skype' => 'Skype',
+            'facebookaddress' => 'Facebook Address' //added field for facebookaddress > ishit (softweb) : 10/17/13
         );
     }
 
@@ -76,28 +80,16 @@ class Loan extends CActiveRecord {
 
         $criteria->compare('id', $this->id);
         $criteria->compare('name', $this->name, true);
+        $criteria->compare('phone1', $this->phone1, true);
+        $criteria->compare('email', $this->email, true);
 
         return new CActiveDataProvider($this, array(
                     'criteria' => $criteria,
                 ));
     }
 
-    public function clientsearch($id) {
-        // Warning: Please modify the following code to remove attributes that
-        // should not be searched.
-
-        $criteria = new CDbCriteria;
-        $criteria->condition = 'borrower_id=:borrower_id';
-        $criteria->params = array(
-            ':borrower_id' => $id,
-        );
-        $criteria->compare('id', $this->id);
-        $criteria->compare('name', $this->name, true);
-        $criteria->compare('phone', $this->phone, true);
-
-        return new CActiveDataProvider($this, array(
-                    'criteria' => $criteria,
-                ));
+    public function getNameFilterOptions() {
+        return CHtml::listData(self::model()->findAll(), 'name', 'name');
     }
 
 }

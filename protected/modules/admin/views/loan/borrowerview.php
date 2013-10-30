@@ -43,7 +43,7 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1>Manage Loans: <?php echo Borrower::model()->findByPk($id)->name?> </h1>
+<h1>Manage Loans: <?php echo Client::model()->findByPk($id)->name?> </h1>
 
 <?php echo CHtml::link('Advanced Search','#',array('class'=>'search-button btn')); ?>
 <div class="search-form" style="display:none">
@@ -54,7 +54,7 @@ $('.search-form form').submit(function(){
 
 <?php $this->widget('bootstrap.widgets.TbGridView',array(
 	'id'=>'loan-grid',
-	'dataProvider'=>$model->borrowersearch($id),
+	'dataProvider'=>$model->clientsearch($id),
 	'filter'=>$model,
 	'columns'=>array(
 		'id',

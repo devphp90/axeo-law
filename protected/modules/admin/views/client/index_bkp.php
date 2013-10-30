@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs=array(
-	'Borrowers'=>array('index'),
+	'Clients'=>array('index'),
 	'Manage',
 );
 
@@ -36,7 +36,7 @@ $('.search-button').click(function(){
 	return false;
 });
 $('.search-form form').submit(function(){
-	$.fn.yiiGridView.update('borrowers-grid', {
+	$.fn.yiiGridView.update('clients-grid', {
 		data: $(this).serialize()
 	});
 	return false;
@@ -58,7 +58,7 @@ $this->widget('ext.eguiders.EGuider', array(
 
 ?>
 
-<h1>Manage Borrowers</h1>
+<h1>Manage Clients</h1>
 
 <?php //echo CHtml::link('Advanced Search','#',array('class'=>'search-button btn')); ?>
 <div class="search-form" style="display:none">
@@ -68,7 +68,7 @@ $this->widget('ext.eguiders.EGuider', array(
 </div><!-- search-form -->
 
 <?php $this->widget('bootstrap.widgets.TbExtendedGridView',array(
-	'id'=>'borrowers-grid',
+	'id'=>'clients-grid',
 	'fixedHeader' => true,
 	'headerOffset' => 0,
 	'type'=>'striped bordered',
@@ -111,8 +111,8 @@ $this->widget('ext.eguiders.EGuider', array(
 						checked.each(function(){
 							values.push($(this).val());
 						});
-						$.post("/admin/borrower/bulkDelete", {ids: values}, function(){
-							$("#borrowers-grid").yiiGridView("update");
+						$.post("/admin/client/bulkDelete", {ids: values}, function(){
+							$("#clients-grid").yiiGridView("update");
 						})
 					}
 				}'
