@@ -82,7 +82,7 @@ class Loan extends CActiveRecord {
                 ));
     }
 
-    public function clientsearch($id) {
+    public function clientSearch($id) {
         // Warning: Please modify the following code to remove attributes that
         // should not be searched.
 

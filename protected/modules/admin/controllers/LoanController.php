@@ -25,7 +25,7 @@ class LoanController extends AdminController {
     public function accessRules() {
         return array(
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('index', 'delete', 'view', 'update', 'create', 'clientview'),
+                'actions' => array('index', 'delete', 'view', 'update', 'create', 'clientView'),
                 'users' => array('admin'),
             ),
             array('deny', // deny all users
