@@ -36,7 +36,7 @@ class Loan extends CActiveRecord {
             array('name', 'length', 'max' => 255),
             array('phone', 'length', 'max' => 255),
             array('phone', 'match', 'pattern' => '/^[0-9]+$/'),
-            array('borrower_id', 'numerical', 'integerOnly' => true),
+            array('client_id', 'numerical', 'integerOnly' => true),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('id, name', 'safe', 'on' => 'search'),
@@ -87,9 +87,9 @@ class Loan extends CActiveRecord {
         // should not be searched.
 
         $criteria = new CDbCriteria;
-        $criteria->condition = 'borrower_id=:borrower_id';
+        $criteria->condition = 'client_id=:client_id';
         $criteria->params = array(
-            ':borrower_id' => $id,
+            ':client_id' => $id,
         );
         $criteria->compare('id', $this->id);
         $criteria->compare('name', $this->name, true);
