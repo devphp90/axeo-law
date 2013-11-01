@@ -60,10 +60,14 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'dataProvider' => $model->search(),
     'filter' => $model,
     'columns' => array(
-        'id',
-        'name',
+        array(
+            'name' => 'name',
+            'type' => 'raw',
+            'value' => 'CHtml::link($data->name, Yii::app()->createUrl("/admin/matter/update", array("id" => $data->id)))'
+        ),
         'phone',
         'client_id',
+        'id',
         array(
             'class' => 'bootstrap.widgets.TbButtonColumn',
         ),
