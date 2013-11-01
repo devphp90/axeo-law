@@ -1,6 +1,6 @@
 <?php
 
-class LoanController extends AdminController {
+class MatterController extends AdminController {
 
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -49,13 +49,13 @@ class LoanController extends AdminController {
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
     public function actionCreate() {
-        $model = new Loan;
+        $model = new Matter();
 
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
-        if (isset($_POST['Loan'])) {
-            $model->attributes = $_POST['Loan'];
+        if (isset($_POST['Matter'])) {
+            $model->attributes = $_POST['Matter'];
             if ($model->save())
                 $this->redirect(array('view', 'id' => $model->id));
         }
@@ -76,8 +76,8 @@ class LoanController extends AdminController {
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
-        if (isset($_POST['Loan'])) {
-            $model->attributes = $_POST['Loan'];
+        if (isset($_POST['Matter'])) {
+            $model->attributes = $_POST['Matter'];
             if ($model->save())
                 $this->redirect(array('view', 'id' => $model->id));
         }
@@ -109,10 +109,10 @@ class LoanController extends AdminController {
      * Lists all models.
      */
     public function actionClientView($id) {
-        $model = new Loan('search');
+        $model = new Matter('search');
         $model->unsetAttributes();  // clear any default values
-        if (isset($_GET['Loan']))
-            $model->attributes = $_GET['Loan'];
+        if (isset($_GET['Matter']))
+            $model->attributes = $_GET['Matter'];
 
 
         $this->render('clientview', array(
@@ -125,10 +125,10 @@ class LoanController extends AdminController {
      * Lists all models.
      */
     public function actionIndex() {
-        $model = new Loan('search');
+        $model = new Matter('search');
         $model->unsetAttributes();  // clear any default values
-        if (isset($_GET['Loan']))
-            $model->attributes = $_GET['Loan'];
+        if (isset($_GET['Matter']))
+            $model->attributes = $_GET['Matter'];
 
         $this->render('index', array(
             'model' => $model,
@@ -141,7 +141,7 @@ class LoanController extends AdminController {
      * @param integer the ID of the model to be loaded
      */
     public function loadModel($id) {
-        $model = Loan::model()->findByPk($id);
+        $model = Matter::model()->findByPk($id);
         if ($model === null)
             throw new CHttpException(404, 'The requested page does not exist.');
         return $model;
@@ -152,7 +152,7 @@ class LoanController extends AdminController {
      * @param CModel the model to be validated
      */
     protected function performAjaxValidation($model) {
-        if (isset($_POST['ajax']) && $_POST['ajax'] === 'loan-form') {
+        if (isset($_POST['ajax']) && $_POST['ajax'] === 'matter-form') {
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }

@@ -1,18 +1,18 @@
 <?php
 
 /**
- * This is the model class for table "loan".
+ * This is the model class for table "matters".
  *
- * The followings are the available columns in table 'loan':
+ * The followings are the available columns in table 'matters':
  * @property integer $id
  * @property string $name
  */
-class Loan extends CActiveRecord {
+class Matter extends CActiveRecord {
 
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
-     * @return Loan the static model class
+     * @return Matter the static model class
      */
     public static function model($className = __CLASS__) {
         return parent::model($className);
@@ -22,7 +22,7 @@ class Loan extends CActiveRecord {
      * @return string the associated database table name
      */
     public function tableName() {
-        return 'loan';
+        return 'matters';
     }
 
     /**
