@@ -66,6 +66,10 @@ $this->widget('bootstrap.widgets.TbGridView', array(
             'value' => 'CHtml::link($data->name, Yii::app()->createUrl("/admin/matter/update", array("id" => $data->id)))'
         ),
         'phone',
+        array(
+            'header' => 'Client Name',
+            'value' => '$data->client->name',
+        ),
         'client_id',
         'id',
         array(
