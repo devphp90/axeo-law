@@ -1,6 +1,7 @@
 <?php
 
-class ClientController extends AdminController {
+class ClientController extends AdminController 
+{
 
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -11,7 +12,8 @@ class ClientController extends AdminController {
     /**
      * @return array action filters
      */
-    public function filters() {
+    public function filters() 
+    {
         return array(
             'accessControl', // perform access control for CRUD operations
         );
@@ -22,7 +24,8 @@ class ClientController extends AdminController {
      * This method is used by the 'accessControl' filter.
      * @return array access control rules
      */
-    public function accessRules() {
+    public function accessRules()
+    {
         return array(
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
                 'actions' => array('index', 'delete', 'view', 'update', 'create', 'bulkDelete'),
@@ -38,7 +41,8 @@ class ClientController extends AdminController {
      * Displays a particular model.
      * @param integer $id the ID of the model to be displayed
      */
-    public function actionView($id) {
+    public function actionView($id)
+    {
         $this->render('view', array(
             'model' => $this->loadModel($id),
         ));
@@ -48,7 +52,8 @@ class ClientController extends AdminController {
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
-    public function actionCreate() {
+    public function actionCreate()
+    {
         $model = new Client();
 
         // Uncomment the following line if AJAX validation is needed
@@ -70,7 +75,8 @@ class ClientController extends AdminController {
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id the ID of the model to be updated
      */
-    public function actionUpdate($id) {
+    public function actionUpdate($id)
+    {
         $model = $this->loadModel($id);
 
         // Uncomment the following line if AJAX validation is needed
@@ -92,7 +98,8 @@ class ClientController extends AdminController {
      * If deletion is successful, the browser will be redirected to the 'admin' page.
      * @param integer $id the ID of the model to be deleted
      */
-    public function actionDelete($id) {
+    public function actionDelete($id) 
+    {
         if (Yii::app()->request->isPostRequest) {
             // we only allow deletion via POST request
             $this->loadModel($id)->delete();
@@ -105,7 +112,8 @@ class ClientController extends AdminController {
             throw new CHttpException(400, 'Invalid request. Please do not repeat this request again.');
     }
 
-    public function actionBulkDelete() {
+    public function actionBulkDelete()
+    {
         $ids = Yii::app()->request->getPost('ids');
 
         $criteria = new CDbCriteria;
@@ -118,7 +126,8 @@ class ClientController extends AdminController {
     /**
      * Lists all models.
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         $model = new Client('search');
         $model->unsetAttributes();  // clear any default values
         if (isset($_GET['Client']))
@@ -134,7 +143,8 @@ class ClientController extends AdminController {
      * If the data model is not found, an HTTP exception will be raised.
      * @param integer the ID of the model to be loaded
      */
-    public function loadModel($id) {
+    public function loadModel($id)
+    {
         $model = Client::model()->findByPk($id);
         if ($model === null)
             throw new CHttpException(404, 'The requested page does not exist.');
@@ -145,7 +155,8 @@ class ClientController extends AdminController {
      * Performs the AJAX validation.
      * @param CModel the model to be validated
      */
-    protected function performAjaxValidation($model) {
+    protected function performAjaxValidation($model)
+    {
         if (isset($_POST['ajax']) && $_POST['ajax'] === 'client-form') {
             echo CActiveForm::validate($model);
             Yii::app()->end();
