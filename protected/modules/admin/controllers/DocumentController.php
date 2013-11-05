@@ -119,7 +119,7 @@ class DocumentController extends AdminController
 
         if (isset($_POST['DocumentVideo'])) {
             $video_model->attributes = $_POST['DocumentVideo'];
-            $video_model->session_id = $id;
+            $video_model->document_id = $id;
             $file = CUploadedFile::getInstance($video_model, 'file_name');
             $video_model->file_name = time() . $file->getName();
             $video_model->file_size = $file->getSize();
@@ -133,7 +133,7 @@ class DocumentController extends AdminController
 
         if (isset($_POST['DocumentPhoto'])) {
             $photo_model->attributes = $_POST['DocumentPhoto'];
-            $photo_model->session_id = $id;
+            $photo_model->document_id = $id;
             $file = CUploadedFile::getInstance($photo_model, 'file_name');
             $photo_model->file_name = time() . $file->getName();
             $photo_model->file_size = $file->getSize();
@@ -231,7 +231,7 @@ class DocumentController extends AdminController
      */
     protected function performAjaxValidation($model)
     {
-            if(isset($_POST['ajax']) && $_POST['ajax']==='users-session-form')
+            if(isset($_POST['ajax']) && $_POST['ajax']==='users-document-form')
             {
                     echo CActiveForm::validate($model);
                     Yii::app()->end();

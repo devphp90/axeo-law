@@ -10,7 +10,7 @@ $('.search-button').click(function(){
 	return false;
 });
 $('.search-form form').submit(function(){
-	$.fn.yiiGridView.update('users-session-grid', {
+	$.fn.yiiGridView.update('users-document-grid', {
 		data: $(this).serialize()
 	});
 	return false;
@@ -32,7 +32,7 @@ $('.search-form form').submit(function(){
 </div><!-- search-form -->
 
 <?php $this->widget('bootstrap.widgets.TbGridView',array(
-	'id'=>'users-session-grid',
+	'id'=>'document-grid',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
     'summaryText' => '',

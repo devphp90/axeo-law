@@ -1,5 +1,5 @@
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
-	'id'=>'session-photo-form',
+	'id'=>'document-photo-form',
 	'enableClientValidation'=>true,
 	'clientOptions'=>array(
 		'validateOnSubmit'=>true,
@@ -32,7 +32,10 @@
         <hr/>
     <?php }
 ?>
-
+    <?php
+    echo "<p class='highlight'>The file must be less than and equal to 640*480 px</p>";
+    echo $form->fileField($photo_model, 'file_name');
+    ?>
 
     <?php echo $form->error($photo_model, 'file_name'); ?>
 

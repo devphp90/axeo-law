@@ -1,6 +1,6 @@
 <?php
 $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-    'id' => 'usersSession-plan-form',
+    'id' => 'document-plan-form',
     'enableClientValidation' => true,
     'clientOptions' => array(
         'validateOnSubmit' => true,

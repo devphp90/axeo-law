@@ -44,7 +44,13 @@ return array(
             'responsiveCss' => true,
         ),
         // uncomment the following to enable URLs in path-format
-
+        'image' => array(
+            'class' => 'application.extensions.image.CImageComponent',
+            // GD or ImageMagick
+            'driver' => 'GD',
+        // ImageMagick setup path
+        //'params'=>array('directory'=>'D:/Program Files/ImageMagick-6.4.8-Q16'),
+        ),
         'urlManager' => array(
             'urlFormat' => 'path',
             'showScriptName' => false,

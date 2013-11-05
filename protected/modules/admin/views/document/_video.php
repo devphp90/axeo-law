@@ -1,6 +1,6 @@
 <?php
 $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-    'id' => 'session-video-form',
+    'id' => 'document-video-form',
     'enableClientValidation' => true,
     'clientOptions' => array(
         'validateOnSubmit' => true,
@@ -54,13 +54,16 @@ if (!empty($uploaded_video)) {
         ));
         ?>
 
+        <?php 
+            echo CHtml::link('Delete', 'javascript:void(0);', array('title' => "Click to delete this video", "class" => "btn btn-danger deleteVbtn", "data-id" => $video->id));
+        ?>
         </li>
     <?php
     }
     echo "</ul>";
 }
 ?>
-
+    <?php echo $form->fileField($video_model, 'file_name'); ?>
     <?php echo $form->error($video_model, 'file_name'); ?>
 
 <div class="form-actions">
