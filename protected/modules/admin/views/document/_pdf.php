@@ -18,7 +18,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
         ?>
 
         <div><strong>Uploaded Pdf</strong></div>
-        <?php echo $uploaded_pdf->file_name; ?>
+        <a target="_blank" href="<?php echo Yii::app()->baseUrl . '/pdfs/' . $uploaded_pdf->file_name ?>"><?php echo $uploaded_pdf->file_name; ?></a>
         <hr/>
     <?php } ?>
         
