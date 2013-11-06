@@ -2,22 +2,23 @@
 
 class DocumentController extends AdminController
 {
+
     public $header_title = '';
-    
+
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
      * using two-column layout. See 'protected/views/layouts/column2.php'.
      */
-    public $layout='/layouts/column2';
+    public $layout = '/layouts/column2';
 
     /**
      * @return array action filters
      */
     public function filters()
     {
-            return array(
-                    'accessControl', // perform access control for CRUD operations
-            );
+        return array(
+            'accessControl', // perform access control for CRUD operations
+        );
     }
 
     /**
@@ -27,23 +28,23 @@ class DocumentController extends AdminController
      */
     public function accessRules()
     {
-            return array(
-                    array('allow',  // allow all users to perform 'index' and 'view' actions
-                            'actions'=>array('index','view', 'deletePhoto', 'deleteVideo'),
-                            'users'=>array('@'),
-                    ),
-                    array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                            'actions'=>array('create','update'),
-                            'users'=>array('@'),
-                    ),
-                    array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                            'actions'=>array('admin','delete'),
-                            'users'=>array('@'),
-                    ),
-                    array('deny',  // deny all users
-                            'users'=>array('*'),
-                    ),
-            );
+        return array(
+            array('allow', // allow all users to perform 'index' and 'view' actions
+                'actions' => array('index', 'view', 'deletePhoto', 'deleteVideo'),
+                'users' => array('@'),
+            ),
+            array('allow', // allow authenticated user to perform 'create' and 'update' actions
+                'actions' => array('create', 'update'),
+                'users' => array('@'),
+            ),
+            array('allow', // allow admin user to perform 'admin' and 'delete' actions
+                'actions' => array('admin', 'delete'),
+                'users' => array('@'),
+            ),
+            array('deny', // deny all users
+                'users' => array('*'),
+            ),
+        );
     }
 
     /**
@@ -52,9 +53,9 @@ class DocumentController extends AdminController
      */
     public function actionView($id)
     {
-            $this->render('view',array(
-                    'model'=>$this->loadModel($id),
-            ));
+        $this->render('view', array(
+            'model' => $this->loadModel($id),
+        ));
     }
 
     /**
@@ -84,7 +85,7 @@ class DocumentController extends AdminController
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id the ID of the model to be updated
      */
-    public function actionUpdate($id, $flag=false)
+    public function actionUpdate($id, $flag = false)
     {
         Yii::import('application.extensions.image.Image');
 
@@ -165,21 +166,20 @@ class DocumentController extends AdminController
      */
     public function actionDelete($id)
     {
-            if(Yii::app()->request->isPostRequest)
-            {
-                    // we only allow deletion via POST request
-                    $model = $this->loadModel($id);
-        if ($model->user_id != Yii::app()->user->id && Yii::app()->user->type != "admin") {
-            throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
-        }
-        $model->delete();
-
-                    // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-                    if(!isset($_GET['ajax']))
-                            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+        if (Yii::app()->request->isPostRequest) {
+            // we only allow deletion via POST request
+            $model = $this->loadModel($id);
+            if ($model->user_id != Yii::app()->user->id && Yii::app()->user->type != "admin") {
+                throw new CHttpException(400, 'Invalid request. Please do not repeat this request again.');
             }
-            else
-                    throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
+            $model->delete();
+
+            // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+            if (!isset($_GET['ajax']))
+                $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+        }
+        else
+            throw new CHttpException(400, 'Invalid request. Please do not repeat this request again.');
     }
 
     /**
@@ -187,13 +187,13 @@ class DocumentController extends AdminController
      */
     public function actionIndex()
     {
-        $model=new Document('search');
+        $model = new Document('search');
         $model->unsetAttributes();  // clear any default values
-        if(isset($_GET['Document']))
-            $model->attributes=$_GET['Document'];
+        if (isset($_GET['Document']))
+            $model->attributes = $_GET['Document'];
 
-        $this->render('index',array(
-            'model'=>$model,
+        $this->render('index', array(
+            'model' => $model,
         ));
     }
 
@@ -202,14 +202,14 @@ class DocumentController extends AdminController
      */
     public function actionAdmin()
     {
-            $model=new Document('search');
-            $model->unsetAttributes();  // clear any default values
-            if(isset($_GET['Document']))
-                    $model->attributes=$_GET['Document'];
+        $model = new Document('search');
+        $model->unsetAttributes();  // clear any default values
+        if (isset($_GET['Document']))
+            $model->attributes = $_GET['Document'];
 
-            $this->render('admin',array(
-                    'model'=>$model,
-            ));
+        $this->render('admin', array(
+            'model' => $model,
+        ));
     }
 
     /**
@@ -219,10 +219,10 @@ class DocumentController extends AdminController
      */
     public function loadModel($id)
     {
-            $model=Document::model()->findByPk($id);
-            if($model===null)
-                    throw new CHttpException(404,'The requested page does not exist.');
-            return $model;
+        $model = Document::model()->findByPk($id);
+        if ($model === null)
+            throw new CHttpException(404, 'The requested page does not exist.');
+        return $model;
     }
 
     /**
@@ -231,21 +231,20 @@ class DocumentController extends AdminController
      */
     protected function performAjaxValidation($model)
     {
-            if(isset($_POST['ajax']) && $_POST['ajax']==='users-document-form')
-            {
-                    echo CActiveForm::validate($model);
-                    Yii::app()->end();
-            }
+        if (isset($_POST['ajax']) && $_POST['ajax'] === 'users-document-form') {
+            echo CActiveForm::validate($model);
+            Yii::app()->end();
+        }
     }
 
     public function actionDeletePhoto()
     {
-        if(isset($_POST['id'])) {
+        if (isset($_POST['id'])) {
             $model = DocumentPhoto::model()->findByPk($_POST['id']);
-            $photoPath = Yii::app()->basePath.'/../photos/';
-            if($model != null) {
-                @unlink($photoPath.$model->file_name);
-                @unlink($photoPath.'thumb/'.$model->file_name);
+            $photoPath = Yii::app()->basePath . '/../photos/';
+            if ($model != null) {
+                @unlink($photoPath . $model->file_name);
+                @unlink($photoPath . 'thumb/' . $model->file_name);
             }
             $model->delete();
         }
@@ -253,13 +252,14 @@ class DocumentController extends AdminController
 
     public function actionDeleteVideo()
     {
-        if(isset($_POST['id'])) {
+        if (isset($_POST['id'])) {
             $model = DocumentVideo::model()->findByPk($_POST['id']);
-            $photoPath = Yii::app()->basePath.'/../videos/';
-            if($model != null) {
-                @unlink($photoPath.$model->file_name);
+            $photoPath = Yii::app()->basePath . '/../videos/';
+            if ($model != null) {
+                @unlink($photoPath . $model->file_name);
             }
             echo $model->delete();
         }
     }
+
 }

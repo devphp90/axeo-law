@@ -43,6 +43,7 @@ $this->widget('bootstrap.widgets.TbDetailView', array(
         'user_id',
         'name',
         'date',
+        'description'
     ),
 ));
 ?>

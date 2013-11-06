@@ -21,14 +21,8 @@ $this->widget('bootstrap.widgets.TbTabs', array(
     'type' => 'tabs', // 'tabs' or 'pills'
     'tabs' => array(
         array('label' => 'Info', 'content' => $this->renderPartial('_form', array('model' => $model), true), 'active' => true),
-        array('label' => 'Subjective', 'content' => $this->renderPartial('_subjective', array('model' => $model), true)),
-        array('label' => 'Objective', 'content' => $this->renderPartial('_objective', array('model' => $model), true)),
-        array('label' => 'Assessment', 'content' => $this->renderPartial('_assessment', array('model' => $model), true)),
-        array('label' => 'Plan', 'content' => $this->renderPartial('_plan', array('model' => $model), true)),
-        array('label' => 'Match Stats', 'content' => $this->renderPartial('_match_stats', array('model' => $model), true)),
         array('label' => 'Video', 'content' => $this->renderPartial('_video', array('video_model' => $video_model, 'uploaded_video' => $uploaded_video), true)),
         array('label' => 'Photos', 'content' => $this->renderPartial('_photos', array('photo_model' => $photo_model, 'uploaded_photo' => $uploaded_photo), true)),
-        array('label' => 'Review', 'content' => $this->renderPartial('_review', array('model' => $model), true)),
     ),
 ));
 ?>

@@ -5,7 +5,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     'clientOptions' => array(
         'validateOnSubmit' => true,
     ),
-        ));
+));
 ?>
 
 <p class="help-block">Fields with <span class="required">*</span> are required.</p>
@@ -20,15 +20,9 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 <?php echo $form->textField($model, 'name', array('class' => 'span5', 'maxlength' => 255)); ?>
 <?php echo $form->error($model, 'name'); ?>
 
-<?php echo $form->textFieldRow($model, 'problem', array('class' => 'span5', 'maxlength' => 40)); ?>
-
-<?php echo $form->textFieldRow($model, 'level', array('class' => 'span5', 'maxlength' => 255)); ?>
-
-<?php echo $form->textFieldRow($model, 'ranking', array('class' => 'span5', 'maxlength' => 255)); ?>
-
-<?php echo $form->textFieldRow($model, 'target_level', array('class' => 'span5', 'maxlength' => 255)); ?>
-
-<?php echo $form->textFieldRow($model, 'target_ranking', array('class' => 'span5', 'maxlength' => 255)); ?>
+<?php echo $form->labelEx($model, 'description'); ?>
+<?php echo $form->textArea($model, 'description', array('class' => 'span5', 'maxlength' => 255)); ?>
+<?php echo $form->error($model, 'description'); ?>
 
 <?php
 if ($model->isNewRecord) {
