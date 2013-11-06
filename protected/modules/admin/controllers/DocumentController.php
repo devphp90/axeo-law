@@ -102,8 +102,11 @@ class DocumentController extends AdminController
 
         $uploaded_photo = DocumentPhoto::model()->findAllByAttributes(array('document_id' => $id));
         $photo_model = new DocumentPhoto();
+        
+        $uploaded_pdf = DocumentPdf::model()->findByAttributes(array('document_id' => $id));
+        $pdf_model = new DocumentPdf();
 
-        if ($model->user_id != Yii::app()->user->id && Yii::app()->user->type != "admin" && Yii::app()->user->type != "reviewer") {
+        if ($model->user_id != Yii::app()->user->id) {
             throw new CHttpException(400, 'Invalid request. Please do not repeat this request again.');
         }
 
@@ -131,6 +134,21 @@ class DocumentController extends AdminController
                 $this->redirect(array('update', 'id' => $model->id));
             }
         }
+        
+        if (isset($_POST['DocumentPdf'])) {
+            $pdf_model->attributes = $_POST['DocumentPdf'];
+            $pdf_model->document_id = $id;
+            $file = CUploadedFile::getInstance($pdf_model, 'file_name');
+            $pdf_model->file_name = time() . $file->getName();
+            $pdf_model->file_size = $file->getSize();
+            $pdf_model->file_type = $file->getType();
+
+            if ($pdf_model->save()) {
+                Utils::mkdir(Yii::app()->basePath . '/../pdfs');
+                $file->saveAs(Yii::app()->basePath . '/../pdfs/' . $pdf_model->file_name);
+                $this->redirect(array('update', 'id' => $model->id));
+            }
+        }
 
         if (isset($_POST['DocumentPhoto'])) {
             $photo_model->attributes = $_POST['DocumentPhoto'];
@@ -155,6 +173,8 @@ class DocumentController extends AdminController
             'uploaded_video' => $uploaded_video,
             'photo_model' => $photo_model,
             'uploaded_photo' => $uploaded_photo,
+            'pdf_model' => $pdf_model,
+            'uploaded_pdf' => $uploaded_pdf,
             'guider_flag' => $guider_flag
         ));
     }

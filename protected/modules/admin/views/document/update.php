@@ -23,6 +23,7 @@ $this->widget('bootstrap.widgets.TbTabs', array(
         array('label' => 'Info', 'content' => $this->renderPartial('_form', array('model' => $model), true), 'active' => true),
         array('label' => 'Video', 'content' => $this->renderPartial('_video', array('video_model' => $video_model, 'uploaded_video' => $uploaded_video), true)),
         array('label' => 'Photos', 'content' => $this->renderPartial('_photos', array('photo_model' => $photo_model, 'uploaded_photo' => $uploaded_photo), true)),
+        array('label' => 'Pdf', 'content' => $this->renderPartial('_pdf', array('pdf_model' => $pdf_model, 'uploaded_pdf' => $uploaded_pdf), true)),
     ),
 ));
 ?>
