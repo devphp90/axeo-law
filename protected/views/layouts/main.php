@@ -45,7 +45,7 @@
                         array('label' => Yii::t('app', 'Logout'), 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
                         array('label' => Yii::t('app', 'Client Login'), 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
                         array('label' => Yii::t('app', 'Lender Login'), 'url' => array('/backend/default/login'), 'visible' => Yii::app()->user->isGuest),
-                        array('label' => Yii::t('app', 'Admin Login'), 'url' => array('/admin/default/login'), 'visible' => Yii::app()->user->isGuest),
+                        array('label' => Yii::t('app', 'Account Login'), 'url' => array('/admin/default/login'), 'visible' => Yii::app()->user->isGuest),
                     ),
                 ),
             ),
