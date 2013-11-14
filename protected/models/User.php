@@ -19,6 +19,7 @@ class User extends CActiveRecord
     const TYPE_ACCOUNT = 2;
     
     public $hash = '^#@=';
+	public $isAdmin = false;
 
     /**
      * Returns the static model of the specified AR class.
@@ -49,7 +50,7 @@ class User extends CActiveRecord
             array('password', 'required', 'on' => 'insert'),
             array('username, email, active', 'required'),
             array('username', 'unique'),
-            array('active', 'numerical', 'integerOnly' => true),
+            array('active, isAdmin', 'numerical', 'integerOnly' => true),
             array('username', 'length', 'max' => 30),
             array('password', 'length', 'max' => 22),
             array('firstname, middlename, lastname, phone,skype', 'length', 'max' => 20),

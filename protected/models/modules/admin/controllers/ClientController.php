@@ -1,9 +1,41 @@
 <?php
 
-class AccountController extends AdminController
+class ClientController extends AdminController 
 {
 
+    /**
+     * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
+     * using two-column layout. See 'protected/views/layouts/column2.php'.
+     */
     public $layout = '/layouts/column2';
+
+    /**
+     * @return array action filters
+     */
+    public function filters() 
+    {
+        return array(
+            'accessControl', // perform access control for CRUD operations
+        );
+    }
+
+    /**
+     * Specifies the access control rules.
+     * This method is used by the 'accessControl' filter.
+     * @return array access control rules
+     */
+    public function accessRules()
+    {
+        return array(
+            array('allow', // allow admin user to perform 'admin' and 'delete' actions
+                'actions' => array('index', 'delete', 'view', 'update', 'create', 'bulkDelete'),
+                'users' => array('admin'),
+            ),
+            array('deny', // deny all users
+                'users' => array('*'),
+            ),
+        );
+    }
 
     /**
      * Displays a particular model.
@@ -22,13 +54,13 @@ class AccountController extends AdminController
      */
     public function actionCreate()
     {
-        $model = new Account;
+        $model = new Client();
 
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
-        if (isset($_POST['Account'])) {
-            $model->attributes = $_POST['Account'];
+        if (isset($_POST['Client'])) {
+            $model->attributes = $_POST['Client'];
             if ($model->save())
                 $this->redirect(array('view', 'id' => $model->id));
         }
@@ -50,13 +82,8 @@ class AccountController extends AdminController
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
-        if (isset($_POST['Account'])) {
-            $model->attributes = $_POST['Account'];
-			//var_dump($model->isAdmin, $_POST); die();
-			if(!empty($_POST['Account']['isAdmin'])) {
-				$model->level = 3;
-				//var_dump($model->attributes); die();
-			}
+        if (isset($_POST['Client'])) {
+            $model->attributes = $_POST['Client'];
             if ($model->save())
                 $this->redirect(array('view', 'id' => $model->id));
         }
@@ -71,7 +98,7 @@ class AccountController extends AdminController
      * If deletion is successful, the browser will be redirected to the 'admin' page.
      * @param integer $id the ID of the model to be deleted
      */
-    public function actionDelete($id)
+    public function actionDelete($id) 
     {
         if (Yii::app()->request->isPostRequest) {
             // we only allow deletion via POST request
@@ -85,18 +112,27 @@ class AccountController extends AdminController
             throw new CHttpException(400, 'Invalid request. Please do not repeat this request again.');
     }
 
+    public function actionBulkDelete()
+    {
+        $ids = Yii::app()->request->getPost('ids');
+
+        $criteria = new CDbCriteria;
+        $criteria->addInCondition('id', $ids);
+        Client::model()->deleteAll($criteria);
+
+        Yii::app()->end();
+    }
+
     /**
      * Lists all models.
      */
     public function actionIndex()
     {
-        $model = new Account('search');
+        $model = new Client('search');
         $model->unsetAttributes();  // clear any default values
-        if (isset($_GET['Account']))
-            $model->attributes = $_GET['Account'];
-		
-		
-		$this->pageTitle = 'Law - Users';
+        if (isset($_GET['Client']))
+            $model->attributes = $_GET['Client'];
+
         $this->render('index', array(
             'model' => $model,
         ));
@@ -109,9 +145,7 @@ class AccountController extends AdminController
      */
     public function loadModel($id)
     {
-        $model = Account::model()->findByPk($id);
-		if($model->level == 3)
-			$model->isAdmin = true;
+        $model = Client::model()->findByPk($id);
         if ($model === null)
             throw new CHttpException(404, 'The requested page does not exist.');
         return $model;
@@ -123,7 +157,7 @@ class AccountController extends AdminController
      */
     protected function performAjaxValidation($model)
     {
-        if (isset($_POST['ajax']) && $_POST['ajax'] === 'account-form') {
+        if (isset($_POST['ajax']) && $_POST['ajax'] === 'client-form') {
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }

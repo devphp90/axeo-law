@@ -1,5 +1,5 @@
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
-	'id'=>'manager-form',
+	'id'=>'lenders-form',
 	'enableAjaxValidation'=>false,
 )); ?>
 
@@ -7,15 +7,9 @@
 
 	<?php echo $form->errorSummary($model); ?>
 
-	<?php echo $form->textFieldRow($model,'username',array('class'=>'span5','maxlength'=>30)); ?>
+	<?php echo $form->textFieldRow($model,'name',array('class'=>'span5','maxlength'=>255)); ?>
 
-	<?php echo $form->passwordFieldRow($model,'password',array('class'=>'span5','maxlength'=>32)); ?>
-
-	<?php echo $form->textFieldRow($model,'email',array('class'=>'span5','maxlength'=>100)); ?>
-
-	<?php echo $form->textFieldRow($model,'active',array('class'=>'span5')); ?>
-	
-	<?php if(!$model->isNewRecord) { echo $form->checkBoxRow($model, 'isAdmin'); } ?>
+	<?php echo $form->textFieldRow($model,'phone',array('class'=>'span5','maxlength'=>20)); ?>
 
 	<div class="form-actions">
 		<?php $this->widget('bootstrap.widgets.TbButton', array(

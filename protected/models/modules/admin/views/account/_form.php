@@ -14,8 +14,6 @@
 	<?php echo $form->textFieldRow($model,'email',array('class'=>'span5','maxlength'=>100)); ?>
 
 	<?php echo $form->textFieldRow($model,'active',array('class'=>'span5')); ?>
-	
-	<?php if(!$model->isNewRecord) { echo $form->checkBoxRow($model, 'isAdmin'); } ?>
 
 	<div class="form-actions">
 		<?php $this->widget('bootstrap.widgets.TbButton', array(

@@ -37,13 +37,13 @@ class Account extends User
             array('password', 'required', 'on' => 'insert'),
             array('username, email, active', 'required'),
             array('username', 'unique'),
-            array('active', 'numerical', 'integerOnly' => true),
+            array('active, isAdmin', 'numerical', 'integerOnly' => true),
             array('username', 'length', 'max' => 30),
             array('password', 'length', 'max' => 22),
             array('email', 'length', 'max' => 100),
             array('email', 'email'),
             array('a_id', 'default', 'setOnEmpty' => false, 'value' => 0),
-            array('level', 'default', 'setOnEmpty' => false, 'value' => 2),
+            //array('level', 'default', 'setOnEmpty' => false, 'value' => 2),
             array('create_time', 'default', 'setOnEmpty' => false, 'value' => date("Y-m-d H:i:s"), 'on' => 'insert'),
             array('update_time', 'default', 'setOnEmpty' => false, 'value' => date("Y-m-d H:i:s"), 'on' => 'update'),
             // The following rule is used by search().
@@ -52,13 +52,13 @@ class Account extends User
         );
     }
 
-    public function defaultScope()
+ /*    public function defaultScope()
     {
         return array(
             'condition' => 'level=2',
         );
     }
-
+ */
     public function beforeSave()
     {
         if (!empty($this->password)) {

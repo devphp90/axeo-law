@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs=array(
-	'Users'=>array('index'),
+	'Accounts'=>array('index'),
 	'Manage',
 );
 
@@ -43,7 +43,7 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1>Manage Users</h1>
+<h1>Manage Accounts</h1>
 
 <div class="search-form" style="display:none">
 <?php $this->renderPartial('_search',array(
@@ -56,17 +56,13 @@ $('.search-form form').submit(function(){
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
 	'columns'=>array(
-		array(
-			'header'=>'Username',
-			'name' => 'username',
-			'value' => 'CHtml::link($data->username, "account/update/id/$data->id")',
-			'type' => 'raw',
-			),
+		'id',
+		'username',
 		'email',
 		'active',
+
 		'create_time',
 		'update_time',
-		'id',
 		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',
 		),

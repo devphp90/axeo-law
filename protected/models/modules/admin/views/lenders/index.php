@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs=array(
-	'Users'=>array('index'),
+	'Lenders'=>array('index'),
 	'Manage',
 );
 
@@ -35,7 +35,7 @@ $('.search-button').click(function(){
 	return false;
 });
 $('.search-form form').submit(function(){
-	$.fn.yiiGridView.update('account-grid', {
+	$.fn.yiiGridView.update('lenders-grid', {
 		data: $(this).serialize()
 	});
 	return false;
@@ -43,8 +43,9 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1>Manage Users</h1>
+<h1>Manage Lenders</h1>
 
+<?php //echo CHtml::link('Advanced Search','#',array('class'=>'search-button btn')); ?>
 <div class="search-form" style="display:none">
 <?php $this->renderPartial('_search',array(
 	'model'=>$model,
@@ -52,23 +53,24 @@ $('.search-form form').submit(function(){
 </div><!-- search-form -->
 
 <?php $this->widget('bootstrap.widgets.TbGridView',array(
-	'id'=>'account-grid',
+	'id'=>'lenders-grid',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
 	'columns'=>array(
-		array(
-			'header'=>'Username',
-			'name' => 'username',
-			'value' => 'CHtml::link($data->username, "account/update/id/$data->id")',
-			'type' => 'raw',
-			),
-		'email',
-		'active',
-		'create_time',
-		'update_time',
 		'id',
+		
+		
+array(
+			'header'=>'Name',
+			'value'=>'$data->name',
+		),
+array(
+			'header'=>'Phone',
+			'value'=>'$data->phone',
+		),
 		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',
 		),
 	),
 )); ?>
+

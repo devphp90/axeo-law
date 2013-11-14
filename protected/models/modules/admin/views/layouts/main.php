@@ -24,7 +24,7 @@
                             'url' => array('/admin/default/index')
                         ),
                         array(
-                            'label' => Yii::t('app', 'Users'),
+                            'label' => Yii::t('app', 'Accounts'),
                             'url' => array('/admin/account'),
                         //'visible'=>Yii::app()->user->isAdmin(),
                         ),
