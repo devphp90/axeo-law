@@ -55,6 +55,7 @@ class AccountController extends AdminController
     public function actionUpdate($id)
     {
         $model = $this->loadModel($id);
+        $model->password = '';
 
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);

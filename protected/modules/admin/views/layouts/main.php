@@ -24,7 +24,7 @@
                             'url' => array('/admin/default/index')
                         ),
                         array(
-                            'label' => Yii::t('app', user()->isSuperAdmin() ? 'Law Offices' : 'Staffs'),
+                            'label' => Yii::t('app', user()->isSuperAdmin() ? 'Law Offices' : 'Staff'),
                             'url' => array('/admin/account'),
                             'visible'=> user()->isAdmin() || user()->isSuperAdmin(),
                         ),
@@ -34,18 +34,8 @@
                         //'visible'=>Yii::app()->user->isAdmin(),
                         ),
                         array(
-                            'label' => Yii::t('app', 'Lenders'),
-                            'url' => array('/admin/lenders'),
-                        //'visible'=>Yii::app()->user->isAdmin(),
-                        ),
-                        array(
                             'label' => Yii::t('app', 'Matters'),
                             'url' => array('/admin/matter'),
-                        //'visible'=>Yii::app()->user->isAdmin(),
-                        ),
-                        array(
-                            'label' => Yii::t('app', 'Insurances'),
-                            'url' => array('/admin/insurance'),
                         //'visible'=>Yii::app()->user->isAdmin(),
                         ),
                         array(
@@ -53,14 +43,7 @@
                             'url' => array('/admin/document'),
                         //'visible'=>Yii::app()->user->isAdmin(),
                         ),
-                        array(
-                            'label' => Yii::t('app', 'Assets'),
-                            'url' => array('/admin/asset'),
-                        ),
-                        array(
-                            'label' => Yii::t('app', 'Employees'),
-                            'url' => array('/admin/employee'),
-                        ),),
+                    ),
                 ),
                 array(
                     'class' => 'bootstrap.widgets.TbMenu',
