@@ -22,28 +22,30 @@ class AccountController extends AdminController
      */
     public function actionCreate()
     {
-        $model = new User;
+        $model = new User();
+        $office = new Office('create');
 
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
+        Utils::ajaxValidation(array($model, $office), 'office-form');
 
-        if (isset($_POST['User'])) {
+        if (isset($_POST['User']) && isset($_POST['Office'])) {
             $model->attributes = $_POST['User'];
+            $office->attributes = $_POST['Office'];
             
-            if (user()->isAdmin()) {
-                $parent = user()->getParent();
-                if ($parent == 0)
-                    $model->a_id = user()->id;
-                else
-                    $model->a_id = $parent;
+            if ($office->save()) {
+                $model->a_id = $office->id;
+                if ($model->save()) {
+                    $office->admin_id = $model->id;
+                    $office->save();
+                    $this->redirect(array('view', 'id' => $model->id));
+                }
             }
-            
-            if ($model->save())
-                $this->redirect(array('view', 'id' => $model->id));
         }
 
         $this->render('create', array(
             'model' => $model,
+            'office' => $office,
         ));
     }
 
