@@ -5,6 +5,7 @@
  *
  * The followings are the available columns in table 'user':
  * @property integer $id
+ * @property integer $a_id
  * @property string $username
  * @property string $password
  * @property string $email
@@ -15,11 +16,15 @@
  */
 class User extends CActiveRecord
 {
+
     const TYPE_USER = 1;
     const TYPE_ACCOUNT = 2;
     
+    const ROLE_USER = 1;
+    const ROLE_ADMIN = 2;
+    const ROLE_SUPER_ADMIN = 3;
+
     public $hash = '^#@=';
-	public $isAdmin = false;
 
     /**
      * Returns the static model of the specified AR class.
@@ -50,18 +55,17 @@ class User extends CActiveRecord
             array('password', 'required', 'on' => 'insert'),
             array('username, email, active', 'required'),
             array('username', 'unique'),
-            array('active, isAdmin', 'numerical', 'integerOnly' => true),
+            array('active, a_id, level', 'numerical', 'integerOnly' => true),
             array('username', 'length', 'max' => 30),
             array('password', 'length', 'max' => 22),
             array('firstname, middlename, lastname, phone,skype', 'length', 'max' => 20),
             array('email,address', 'length', 'max' => 100),
             array('email', 'email'),
-            array('level', 'default', 'setOnEmpty' => false, 'value' => 1),
             array('create_time', 'default', 'setOnEmpty' => false, 'value' => date("Y-m-d H:i:s"), 'on' => 'insert'),
             array('update_time', 'default', 'setOnEmpty' => false, 'value' => date("Y-m-d H:i:s"), 'on' => 'update'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, username, password, email, active, level, create_time, update_time', 'safe', 'on' => 'search'),
+            array('id, a_id, username, password, email, active, level, create_time, update_time', 'safe', 'on' => 'search'),
         );
     }
 
@@ -105,15 +109,14 @@ class User extends CActiveRecord
 
     public function beforeSave()
     {
+        $parent = parent::beforeSave();
+        
         if (!empty($this->password)) {
             $this->password = $this->hashPassword($this->password);
-        }else
+        } else
             unset($this->password);
 
-        if (Yii::app()->user->isAccount())
-            $this->a_id = Yii::app()->user->id;
-
-        return true;
+        return $parent;
     }
 
     /**
@@ -126,8 +129,24 @@ class User extends CActiveRecord
         // should not be searched.
 
         $criteria = new CDbCriteria;
+        
+        $criteria->condition = 'a_id = :aId';
+        
+        if (user()->isSuperAdmin()) {
+            $criteria->params = array(':aId' => 0);
+        }
+        
+        if (user()->isAdmin()) {
+            if (user()->getParent() == 0) {
+                $criteria->params = array(':aId' => user()->id);
+            } else
+                $criteria->params = array(':aId' => user()->getParent());
+            $criteria->condition .= ' OR id = :id';
+            $criteria->params[':id'] = user()->id;
+        }
 
         $criteria->compare('id', $this->id);
+        $criteria->compare('a_id', $this->a_id);
         $criteria->compare('username', $this->username, true);
         $criteria->compare('password', $this->password, true);
         $criteria->compare('email', $this->email, true);
@@ -135,10 +154,10 @@ class User extends CActiveRecord
         $criteria->compare('level', $this->level);
         $criteria->compare('create_time', $this->create_time, true);
         $criteria->compare('update_time', $this->update_time, true);
-
+        
         return new CActiveDataProvider($this, array(
-                    'criteria' => $criteria,
-                ));
+            'criteria' => $criteria,
+        ));
     }
 
     /**
@@ -188,8 +207,8 @@ class User extends CActiveRecord
 
 
         return new CActiveDataProvider('UserRole', array(
-                    'criteria' => $criteria,
-                ));
+            'criteria' => $criteria,
+        ));
     }
 
 }

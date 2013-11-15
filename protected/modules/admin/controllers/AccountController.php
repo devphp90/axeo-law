@@ -22,13 +22,22 @@ class AccountController extends AdminController
      */
     public function actionCreate()
     {
-        $model = new Account;
+        $model = new User;
 
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
-        if (isset($_POST['Account'])) {
-            $model->attributes = $_POST['Account'];
+        if (isset($_POST['User'])) {
+            $model->attributes = $_POST['User'];
+            
+            if (user()->isAdmin()) {
+                $parent = user()->getParent();
+                if ($parent == 0)
+                    $model->a_id = user()->id;
+                else
+                    $model->a_id = $parent;
+            }
+            
             if ($model->save())
                 $this->redirect(array('view', 'id' => $model->id));
         }
@@ -50,13 +59,13 @@ class AccountController extends AdminController
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
-        if (isset($_POST['Account'])) {
-            $model->attributes = $_POST['Account'];
-			//var_dump($model->isAdmin, $_POST); die();
-			if(!empty($_POST['Account']['isAdmin'])) {
-				$model->level = 3;
-				//var_dump($model->attributes); die();
-			}
+        if (isset($_POST['User'])) {
+            $model->attributes = $_POST['User'];
+            
+            if (!user()->isSuperAdmin() && !empty($_POST['isAdmin'])) {
+                $model->level = USER::ROLE_ADMIN;
+            }
+            
             if ($model->save())
                 $this->redirect(array('view', 'id' => $model->id));
         }
@@ -90,13 +99,13 @@ class AccountController extends AdminController
      */
     public function actionIndex()
     {
-        $model = new Account('search');
+        $model = new User('search');
+        
         $model->unsetAttributes();  // clear any default values
-        if (isset($_GET['Account']))
-            $model->attributes = $_GET['Account'];
-		
-		
-		$this->pageTitle = 'Law - Users';
+        if (isset($_GET['User']))
+            $model->attributes = $_GET['User'];
+        
+        $this->pageTitle = 'Law - Offices';
         $this->render('index', array(
             'model' => $model,
         ));
@@ -109,9 +118,7 @@ class AccountController extends AdminController
      */
     public function loadModel($id)
     {
-        $model = Account::model()->findByPk($id);
-		if($model->level == 3)
-			$model->isAdmin = true;
+        $model = User::model()->findByPk($id);
         if ($model === null)
             throw new CHttpException(404, 'The requested page does not exist.');
         return $model;
