@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs = array(
-    'Users' => array('index'),
+    'Offices' => array('index'),
     'Manage',
 );
 
@@ -43,7 +43,7 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1>Manage Users</h1>
+<h1>Manage Office</h1>
 
 <div class="search-form" style="display:none">
     <?php

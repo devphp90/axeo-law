@@ -25,7 +25,7 @@
                         ),
                         array(
                             'label' => Yii::t('app', user()->isSuperAdmin() ? 'Law Offices' : 'Staff'),
-                            'url' => array('/admin/account'),
+                            'url' => array('/admin/office'),
                             'visible'=> user()->isAdmin() || user()->isSuperAdmin(),
                         ),
                         array(

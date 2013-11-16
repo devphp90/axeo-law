@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs = array(
-    'Accounts' => array('index'),
+    'Offices' => array('index'),
     $model->id,
 );
 
@@ -40,7 +40,7 @@ $this->menu = array(
 );
 ?>
 
-<h1>View Account #<?php echo $model->id; ?></h1>
+<h1>View Office #<?php echo $model->id; ?></h1>
 
 <?php
 $this->widget('bootstrap.widgets.TbDetailView', array(

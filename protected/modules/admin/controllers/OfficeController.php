@@ -1,6 +1,6 @@
 <?php
 
-class AccountController extends AdminController
+class OfficeController extends AdminController
 {
 
     public $layout = '/layouts/column2';
@@ -133,7 +133,7 @@ class AccountController extends AdminController
      */
     protected function performAjaxValidation($model)
     {
-        if (isset($_POST['ajax']) && $_POST['ajax'] === 'account-form') {
+        if (isset($_POST['ajax']) && $_POST['ajax'] === 'office-form') {
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }
