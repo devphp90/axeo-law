@@ -1,6 +1,6 @@
 <?php
 
-class OfficeController extends AdminController
+class StaffController extends AdminController
 {
 
     public $layout = '/layouts/column2';
@@ -22,29 +22,27 @@ class OfficeController extends AdminController
      */
     public function actionCreate()
     {
-        $model = new Office('create');
-        $user = new User();
+        $model = new User;
 
-        Utils::ajaxValidation(array($model, $user), 'office-form');
+        Utils::ajaxValidation($model, 'staff-form');
 
-        if (isset($_POST['User']) && isset($_POST['Office'])) {
-            $user->attributes = $_POST['User'];
-            $model->attributes = $_POST['Office'];
+        if (isset($_POST['User'])) {
+            $model->attributes = $_POST['User'];
             
-            if ($model->save()) {
-                $user->a_id = $model->id;
-                $user->level = User::ROLE_ADMIN;
-                if ($user->save()) {
-                    $model->admin_id = $user->id;
-                    $model->save();
-                    $this->redirect(array('view', 'id' => $model->id));
-                }
+            if (user()->isAdmin()) {
+                $parent = user()->getParent();
+                if ($parent == 0)
+                    $model->a_id = user()->id;
+                else
+                    $model->a_id = $parent;
             }
+            
+            if ($model->save())
+                $this->redirect(array('view', 'id' => $model->id));
         }
 
         $this->render('create', array(
             'model' => $model,
-            'user' => $user,
         ));
     }
 
@@ -56,22 +54,22 @@ class OfficeController extends AdminController
     public function actionUpdate($id)
     {
         $model = $this->loadModel($id);
-        $user = $model->admin;
-        $user->password = '';
         
-        Utils::ajaxValidation(array($model, $user), 'office-form');
-        
-        if (isset($_POST['Office']) && isset($_POST['User'])) {
-            $model->attributes = $_POST['Office'];
-            $user->attributes = $_POST['User'];
+        Utils::ajaxValidation($model, 'staff-form');
+
+        if (isset($_POST['User'])) {
+            $model->attributes = $_POST['User'];
             
-            if ($model->save() && $user->save())
+            if (!user()->isSuperAdmin() && !empty($_POST['isAdmin'])) {
+                $model->level = USER::ROLE_ADMIN;
+            }
+            
+            if ($model->save())
                 $this->redirect(array('view', 'id' => $model->id));
         }
 
         $this->render('update', array(
             'model' => $model,
-            'user' => $user
         ));
     }
 
@@ -99,11 +97,11 @@ class OfficeController extends AdminController
      */
     public function actionIndex()
     {
-        $model = new Office('search');
+        $model = new User('search');
         
         $model->unsetAttributes();  // clear any default values
-        if (isset($_GET['Office']))
-            $model->attributes = $_GET['Office'];
+        if (isset($_GET['User']))
+            $model->attributes = $_GET['User'];
         
         $this->pageTitle = 'Law - Offices';
         $this->render('index', array(
@@ -118,7 +116,7 @@ class OfficeController extends AdminController
      */
     public function loadModel($id)
     {
-        $model = Office::model()->findByPk($id);
+        $model = User::model()->findByPk($id);
         if ($model === null)
             throw new CHttpException(404, 'The requested page does not exist.');
         return $model;
@@ -130,7 +128,7 @@ class OfficeController extends AdminController
      */
     protected function performAjaxValidation($model)
     {
-        if (isset($_POST['ajax']) && $_POST['ajax'] === 'office-form') {
+        if (isset($_POST['ajax']) && $_POST['ajax'] === 'staff-form') {
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }

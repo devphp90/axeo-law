@@ -24,9 +24,14 @@
                             'url' => array('/admin/default/index')
                         ),
                         array(
-                            'label' => Yii::t('app', user()->isSuperAdmin() ? 'Law Offices' : 'Staff'),
+                            'label' => Yii::t('app', 'Law Offices'),
                             'url' => array('/admin/office'),
-                            'visible'=> user()->isAdmin() || user()->isSuperAdmin(),
+                            'visible'=> user()->isSuperAdmin(),
+                        ),
+                        array(
+                            'label' => Yii::t('app', 'Staff'),
+                            'url' => array('/admin/staff'),
+                            'visible'=> user()->isAdmin(),
                         ),
                         array(
                             'label' => Yii::t('app', 'Clients'),
