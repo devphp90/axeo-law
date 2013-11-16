@@ -60,15 +60,22 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'filter' => $model,
     'columns' => array(
         array(
-            'header' => 'Username',
-            'name' => 'username',
-            'value' => 'CHtml::link($data->username, url("/admin/account/update", array("id" => $data->id)))',
+            'name' => 'name',
+            'value' => 'CHtml::link($data->name, url("/admin/office/update", array("id" => $data->id)))',
             'type' => 'raw',
         ),
-        'email',
-        'active',
-        'create_time',
-        'update_time',
+        'address',
+        'phone',
+        array(
+            'header' => 'Admin Email',
+            'name' => 'adminEmail',
+            'value' => '$data->admin->email',
+        ),
+        array(
+            'header' => 'Admin Username',
+            'name' => 'adminUsername',
+            'value' => '$data->admin->username',
+        ),
         'id',
         array(
             'class' => 'bootstrap.widgets.TbButtonColumn',

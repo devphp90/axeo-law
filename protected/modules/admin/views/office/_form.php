@@ -15,8 +15,8 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     $this->widget('bootstrap.widgets.TbTabs', array(
         'type' => 'tabs', // 'tabs' or 'pills'
         'tabs' => array(
-            array('label' => 'Office Detail', 'content' => $this->renderPartial('_form_office', array('form' => $form, 'office' => $office), true), 'active' => true),
-            array('label' => 'Admin Profile', 'content' => $this->renderPartial('_form_admin', array('form' => $form, 'model' => $model), true))
+            array('label' => 'Office Detail', 'content' => $this->renderPartial('_form_office', array('form' => $form, 'office' => $model), true), 'active' => true),
+            array('label' => 'Admin Profile', 'content' => $this->renderPartial('_form_admin', array('form' => $form, 'model' => $user), true))
         ),
     ));
     ?>

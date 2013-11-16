@@ -12,6 +12,8 @@
  */
 class Office extends CActiveRecord
 {
+    public $adminEmail;
+    public $adminUsername;
 
     /**
      * Returns the static model of the specified AR class.
@@ -58,6 +60,7 @@ class Office extends CActiveRecord
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
+            'admin' => array(self::BELONGS_TO, 'User', 'admin_id'),
         );
     }
 

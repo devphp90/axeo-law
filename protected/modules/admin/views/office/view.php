@@ -47,12 +47,10 @@ $this->widget('bootstrap.widgets.TbDetailView', array(
     'data' => $model,
     'attributes' => array(
         'id',
-        'username',
-        'email',
-        'active',
-        'level',
-        'create_time',
-        'update_time',
+        'name',
+        'address',
+        'phone',
+        'admin_id',
     ),
 ));
 ?>
