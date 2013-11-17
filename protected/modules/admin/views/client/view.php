@@ -41,6 +41,9 @@ $this->widget('bootstrap.widgets.TbDetailView', array(
     'attributes' => array(
         'id',
         'name',
+        'phone',
+        'skype',
+        'facebook',
     ),
 ));
 ?>

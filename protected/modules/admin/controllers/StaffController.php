@@ -2,7 +2,6 @@
 
 class StaffController extends AdminController
 {
-
     public $layout = '/layouts/column2';
 
     /**

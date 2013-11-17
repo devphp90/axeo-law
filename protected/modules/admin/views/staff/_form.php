@@ -20,8 +20,9 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     <?php echo $form->textFieldRow($model, 'active', array('class' => 'span5')); ?>
 
     <?php
-
-    if (!$model->isNewRecord && $model->level != User::ROLE_SUPER_ADMIN && $model->a_id != 0) {
+    if (!$model->isNewRecord && $model->level != User::ROLE_SUPER_ADMIN && $model->a_id != 0) { ?>
+    <label class="required">Is Admin</label>
+    <?php
         echo CHtml::checkBox('isAdmin');
     }
     ?>

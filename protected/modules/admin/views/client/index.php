@@ -78,23 +78,20 @@ $this->widget('bootstrap.widgets.TbExtendedGridView', array(
     'filter' => $model,
     'columns' => array(
         array(
+            'name' => 'office_id',
+            'type' => 'raw',
+            'filter' => Client::getOfficeOptions(),
+            'value' => 'CHtml::link($data->office->name, Yii::app()->createUrl("/admin/office/update", array("id" => $data->office_id)))',
+            'visible' => user()->isSuperAdmin(),
+        ),
+        array(
             'name' => 'name',
             'type' => 'raw',
             'filter' => $model->getNameFilterOptions(),
             'value' => 'CHtml::link($data->name, Yii::app()->createUrl("/admin/client/update", array("id" => $data->id)))',
-            'htmlOptions' => array('style' => 'width: 120px'),
-            'headerHtmlOptions' => array('style' => 'width: 120px'),
         ),
-        array(
-            'name' => 'phone1',
-            'htmlOptions' => array('style' => 'width: 120px'),
-            'headerHtmlOptions' => array('style' => 'width: 120px'),
-        ),
-        array(
-            'name' => 'id',
-            'htmlOptions' => array('style' => 'width: 70px'),
-            'headerHtmlOptions' => array('style' => 'width: 70px'),
-        ),
+        'phone',
+        'id',
         array(
             'htmlOptions' => array('style' => 'width: 80px'),
             'headerHtmlOptions' => array('style' => 'width: 80px'),
@@ -109,17 +106,17 @@ $this->widget('bootstrap.widgets.TbExtendedGridView', array(
                 'size' => 'small',
                 'label' => 'Delete Selected',
                 'click' => 'js:function(checked){
-					var values = [];
+                        var values = [];
 
-					if (confirm("Are you sure you want to delete the selected items?")) {
-						checked.each(function(){
-							values.push($(this).val());
-						});
-						$.post("/admin/client/bulkDelete", {ids: values}, function(){
-							$("#clients-grid").yiiGridView("update");
-						})
-					}
-				}'
+                        if (confirm("Are you sure you want to delete the selected items?")) {
+                                checked.each(function(){
+                                        values.push($(this).val());
+                                });
+                                $.post("/admin/client/bulkDelete", {ids: values}, function(){
+                                        $("#clients-grid").yiiGridView("update");
+                                })
+                        }
+                }'
             )
         ),
         // if grid doesn't have a checkbox column type, it will attach
