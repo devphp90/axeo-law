@@ -153,4 +153,12 @@ class Utils
         }
         return $res;
     }
+    
+    public static function getOfficeOptions()
+    {
+        if (user()->isAdmin())
+            return CHtml::listData(Office::model()->findAllByAttributes(array('id' => user()->getParent())), 'id', 'name');
+        else
+            return CHtml::listData(Office::model()->findAll(), 'id', 'name');
+    }
 }

@@ -12,7 +12,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     <p class="help-block">Fields with <span class="required">*</span> are required.</p>
 
     <?php if (user()->isSuperAdmin()) { ?>
-        <?php echo $form->dropdownListRow($model, 'office_id', Client::getOfficeOptions(), array('class' => 'span5', 'empty' => '-- Select Office --')); ?>
+        <?php echo $form->dropdownListRow($model, 'office_id', Utils::getOfficeOptions(), array('class' => 'span5', 'empty' => '-- Select Office --')); ?>
     <?php } else { ?>
         <?php echo $form->hiddenField($model, 'office_id'); ?>
     <?php } ?>

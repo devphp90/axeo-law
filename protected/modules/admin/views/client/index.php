@@ -80,7 +80,7 @@ $this->widget('bootstrap.widgets.TbExtendedGridView', array(
         array(
             'name' => 'office_id',
             'type' => 'raw',
-            'filter' => Client::getOfficeOptions(),
+            'filter' => Utils::getOfficeOptions(),
             'value' => 'CHtml::link($data->office->name, Yii::app()->createUrl("/admin/office/update", array("id" => $data->office_id)))',
             'visible' => user()->isSuperAdmin(),
         ),
