@@ -6,10 +6,16 @@
 					'class'=>''
 				)
 			));
+			?>
+			<div id="submenu-action" class="well well-small">
+			<?php
 		$this->widget('bootstrap.widgets.TbMenu', array(
 				'type'=>'pills',
 				'items'=>$this->menu,
 			));
+			?>
+			</div>
+			<?php 
 		$this->endWidget();
 		echo $content; ?>
 </div>

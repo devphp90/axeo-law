@@ -13,7 +13,7 @@
         <?php
         $this->widget('bootstrap.widgets.TbNavbar', array(
             'fixed' => true,
-            'brand' => Yii::app()->name . ' Admin',
+            'brand' => Yii::app()->name . ' Office',
             'collapse' => true, // requires bootstrap-responsive.css
             'items' => array(
                 array(
@@ -62,14 +62,14 @@
         ));
         ?>
         <div class="container" id="page">
-            <?php if (isset($this->breadcrumbs)): ?>
+            <?php // if (isset($this->breadcrumbs)): ?>
                 <?php
-                $this->widget('bootstrap.widgets.TbBreadcrumbs', array(
+               /* $this->widget('bootstrap.widgets.TbBreadcrumbs', array(
                     'links' => $this->breadcrumbs,
                     'homeLink' => CHtml::link('Home', $this->homeUrl),
-                ));
+                ));*/
                 ?>
-            <?php endif ?>
+            <?php //endif ?>
 
 
             <?php echo $content; ?>
@@ -77,9 +77,9 @@
             <hr/>
 
             <div id="footer">
-                Copyright &copy; <?php echo date('Y'); ?> by My Company.<br/>
+                Copyright &copy; <?php echo date('Y'); ?> by AXEO.<br/>
                 All Rights Reserved.<br/>
-                <?php echo Yii::powered(); ?>
+                
             </div><!-- footer -->
 
         </div><!-- page -->

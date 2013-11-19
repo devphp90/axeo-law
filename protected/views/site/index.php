@@ -28,9 +28,9 @@ $this->pageTitle = Yii::app()->name;
 $this->widget('ext.eguiders.EGuider', array(
     'id' => 'first',
     'next' => 'second',
-    'title' => 'Guider title',
-    'buttons' => array(array('name' => 'Next')),
-    'description' => '<b>here you should put some intresting text</b>',
+    'title' => 'Guiders',
+    'buttons' => array(array('name' => 'Next', 'onclick'=> "js:function(){guiders.hideAll();}")),
+    'description' => '<b>Guiders help you navigate!</b>',
     'overlay' => true,
     'xButton' => true,
     // look here !! 'show' is true, so that means this guider will be

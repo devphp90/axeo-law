@@ -9,9 +9,8 @@ $this->breadcrumbs=array(
 );
 ?>
 
-<h1>Admin Login</h1>
+<h1 style="margin-bottom: 19px">Office Login</h1>
 
-<p>Please fill out the following form with your login credentials:</p>
 
 <div class="form">
 <?php $form=$this->beginWidget('CActiveForm', array(
@@ -22,16 +21,14 @@ $this->breadcrumbs=array(
 	),
 )); ?>
 
-	<!--<p class="note">Fields with <span class="required">*</span> are required.<br/>-->Admin account: admin (pass is same)</p>
-
 	<div class="row">
-		<?php echo $form->labelEx($model,'username'); ?>
+		<?php echo $form->label($model,'username'); ?>
 		<?php echo $form->textField($model,'username', array('hint'=>'')); ?>
 		<?php echo $form->error($model,'username'); ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'password'); ?>
+		<?php echo $form->label($model,'password'); ?>
 		<?php echo $form->passwordField($model,'password'); ?>
 		<?php echo $form->error($model,'password'); ?>
 	</div>

@@ -21,6 +21,7 @@ $this->menu = array(
         'label' => Yii::t('app', 'Export(Excel)'),
         'icon' => 'icon-download',
         'url' => $this->createUrl('export', array('type' => 'excel')),
+		'linkOptions' => array('onclick' => 'alert("Export to Excel is inactive in demo."); return false;'),
     ),
     array(
         'label' => Yii::t('app', 'Help'),
@@ -45,8 +46,8 @@ $('.search-form form').submit(function(){
 
 $this->widget('ext.eguiders.EGuider', array(
     'id' => 'first',
-    'title' => 'Start',
-    'description' => '<b>Start your work with pushing this button</b>',
+    'title' => 'Add Client',
+    'description' => '<b>To add a new Client,  click Create.</b>',
     'overlay' => true,
     'xButton' => true,
     'show' => true,

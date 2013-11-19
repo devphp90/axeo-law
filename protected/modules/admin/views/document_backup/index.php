@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs = array(
-    'Matter' => array('index'),
+    'Documents' => array('index'),
     'Manage',
 );
 
@@ -20,7 +20,6 @@ $this->menu = array(
         'label' => Yii::t('app', 'Export(Excel)'),
         'icon' => 'icon-download',
         'url' => $this->createUrl('export', array('type' => 'excel')),
-		'linkOptions' => array('onclick' => 'alert("Export to Excel is inactive in demo."); return false;'),
     ),
     array(
         'label' => Yii::t('app', 'Help'),
@@ -36,7 +35,7 @@ $('.search-button').click(function(){
 	return false;
 });
 $('.search-form form').submit(function(){
-	$.fn.yiiGridView.update('matter-grid', {
+	$.fn.yiiGridView.update('document-grid', {
 		data: $(this).serialize()
 	});
 	return false;
@@ -44,9 +43,9 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1>Manage Matters</h1>
+<h1>Manage Documents</h1>
 
-
+<?php echo CHtml::link('Advanced Search', '#', array('class' => 'search-button btn')); ?>
 <div class="search-form" style="display:none">
     <?php
     $this->renderPartial('_search', array(
@@ -57,22 +56,18 @@ $('.search-form form').submit(function(){
 
 <?php
 $this->widget('bootstrap.widgets.TbGridView', array(
-    'id' => 'matter-grid',
+    'id' => 'document-grid',
     'dataProvider' => $model->search(),
     'filter' => $model,
-	'type' => 'striped bordered',
     'columns' => array(
         array(
-            'name' => 'name',
+            'name' => 'date',
             'type' => 'raw',
-            'value' => 'CHtml::link($data->name, Yii::app()->createUrl("/admin/matter/update", array("id" => $data->id)))'
+            'value' => 'CHtml::link(Yii::app()->dateFormatter->format("MM/d/y",strtotime($data->date)), Yii::app()->createUrl("/admin/document/update", array("id" => $data->id), array("title" => "Edit")))',
+            'htmlOptions' => array('style' => 'width: 120px'),
+            'headerHtmlOptions' => array('style' => 'width: 120px'),
         ),
-        'phone',
-        array(
-            'header' => 'Client Name',
-            'value' => 'isset($data->client) ? $data->client->name : ""',
-        ),
-        'client_id',
+        'name',
         'id',
         array(
             'class' => 'bootstrap.widgets.TbButtonColumn',

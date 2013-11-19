@@ -20,6 +20,7 @@ $this->menu = array(
         'label' => Yii::t('app', 'Export(Excel)'),
         'icon' => 'icon-download',
         'url' => $this->createUrl('export', array('type' => 'excel')),
+		'linkOptions' => array('onclick' => 'alert("Export to Excel is inactive in demo."); return false;'),
     ),
     array(
         'label' => Yii::t('app', 'Help'),
@@ -58,6 +59,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'id' => 'account-grid',
     'dataProvider' => $model->search(),
     'filter' => $model,
+	'type' => 'striped bordered',
     'columns' => array(
         array(
             'name' => 'name',
