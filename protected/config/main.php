@@ -65,8 +65,8 @@ return array(
         'db' => array(
             'connectionString' => 'mysql:host=localhost;dbname=law',
             'emulatePrepare' => true,
-            'username' => 'law',
-            'password' => 'edxhHaJBrR2FCMJ3',
+            'username' => 'root',
+            'password' => '',
             'charset' => 'utf8',
             'enableParamLogging' => true,
             'enableProfiling' => true,

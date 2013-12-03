@@ -29,6 +29,11 @@
                             'visible'=> user()->isSuperAdmin(),
                         ),
                         array(
+                            'label' => Yii::t('app', 'Role'),
+                            'url' => array('/admin/role'),
+                            'visible'=> user()->isSuperAdmin() || user()->isAdmin(),
+                        ),
+                        array(
                             'label' => Yii::t('app', 'Staff'),
                             'url' => array('/admin/staff'),
                             'visible'=> user()->isAdmin(),

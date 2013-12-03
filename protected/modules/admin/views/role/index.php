@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs = array(
-    'Staff' => array('index'),
+    'Clients' => array('index'),
     'Manage',
 );
 
@@ -9,6 +9,7 @@ $this->menu = array(
         'label' => Yii::t('app', 'Create'),
         'icon' => 'icon-plus',
         'url' => $this->createUrl('create'),
+        'linkOptions' => array('id' => 'create-button'),
     ),
     array(
         'label' => Yii::t('app', 'Search'),
@@ -36,7 +37,7 @@ $('.search-button').click(function(){
 	return false;
 });
 $('.search-form form').submit(function(){
-	$.fn.yiiGridView.update('account-grid', {
+	$.fn.yiiGridView.update('clients-grid', {
 		data: $(this).serialize()
 	});
 	return false;
@@ -44,7 +45,8 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1>Manage Staff</h1>
+
+<h1>Manage Roles</h1>
 
 <div class="search-form" style="display:none">
     <?php
@@ -56,19 +58,23 @@ $('.search-form form').submit(function(){
 
 <?php
 $this->widget('bootstrap.widgets.TbGridView', array(
-    'id' => 'account-grid',
+    'id' => 'role-grid',
     'dataProvider' => $model->search(),
     'filter' => $model,
     'type' => 'striped bordered',
     'columns' => array(
         array(
-            'name' => 'username',
-            'value' => 'CHtml::link($data->username, url("/admin/staff/update", array("id" => $data->id)))',
+            'name' => 'name',
+            'value' => 'CHtml::link($data->name, url("/admin/role/update", array("id" => $data->id)))',
             'type' => 'raw',
         ),
-        'email',
-        'firstname',
-        'lastname',
+        array(
+            'name' => 'office_id',
+            'type' => 'raw',
+            'filter' => Utils::getOfficeOptions(),
+            'value' => 'CHtml::link($data->office->name, Yii::app()->createUrl("/admin/office/update", array("id" => $data->office_id)))',
+            'visible' => user()->isSuperAdmin(),
+        ),
         'id',
         array(
             'class' => 'bootstrap.widgets.TbButtonColumn',

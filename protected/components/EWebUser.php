@@ -126,6 +126,12 @@ class EWebUser extends CWebUser
 
         return $row['level'];
     }
+    
+    public function getOfficeId()
+    {
+        $user = User::model()->findByPk(user()->id);
+        return $user->a_id;
+    }
 
 }
 
