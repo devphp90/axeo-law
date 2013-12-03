@@ -157,8 +157,16 @@ class Utils
     public static function getOfficeOptions()
     {
         if (user()->isAdmin())
-            return CHtml::listData(Office::model()->findAllByAttributes(array('id' => user()->getParent())), 'id', 'name');
+            return CHtml::listData(Office::model()->findAllByAttributes(array('id' => user()->officeId)), 'id', 'name');
         else
             return CHtml::listData(Office::model()->findAll(), 'id', 'name');
+    }
+    
+    public static function getRoleOptions()
+    {
+        if (user()->isAdmin())
+            return CHtml::listData(Role::model()->findAllByAttributes(array('id' => user()->officeId)), 'id', 'name');
+        else
+            return CHtml::listData(Role::model()->findAll(), 'id', 'name');
     }
 }

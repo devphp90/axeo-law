@@ -53,6 +53,7 @@ class StaffController extends AdminController
     public function actionUpdate($id)
     {
         $model = $this->loadModel($id);
+        $model->unsetAttributes(array('password'));
         
         Utils::ajaxValidation($model, 'staff-form');
 

@@ -16,6 +16,12 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     <?php echo $form->passwordFieldRow($model, 'password', array('class' => 'span5', 'maxlength' => 32)); ?>
 
     <?php echo $form->textFieldRow($model, 'email', array('class' => 'span5', 'maxlength' => 100)); ?>
+    
+    <?php echo $form->textFieldRow($model, 'firstname', array('class' => 'span5', 'maxlength' => 100)); ?>
+    
+    <?php echo $form->textFieldRow($model, 'lastname', array('class' => 'span5', 'maxlength' => 100)); ?>
+    
+    <?php echo $form->dropdownListRow($model, 'role_id', Utils::getRoleOptions(), array('class' => 'span5', 'empty' => '-- Select Role --')); ?>
 
     <?php echo $form->textFieldRow($model, 'active', array('class' => 'span5')); ?>
 

@@ -24,6 +24,6 @@ $this->menu = array(
 );
 ?>
 
-<h1>Update Office <?php echo $model->id; ?></h1>
+<h1>Update Staff <?php echo $model->id; ?></h1>
 
 <?php echo $this->renderPartial('_form', array('model' => $model)); ?>

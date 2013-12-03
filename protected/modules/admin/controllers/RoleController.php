@@ -17,7 +17,8 @@ class RoleController extends AdminController
 
         if (isset($_POST['Role'])) {
             $model->attributes = $_POST['Role'];
-            $model->office_id = user()->getParent();
+            if (user()->isAdmin())
+                $model->office_id = user()->getParent();
             if ($model->save())
                 $this->redirect(array('view', 'id' => $model->id));
         }

@@ -7,6 +7,7 @@
  * @property integer $id
  * @property integer $a_id
  * @property string $username
+ * @property integer $role_id
  * @property string $password
  * @property string $email
  * @property integer $active
@@ -55,7 +56,7 @@ class User extends CActiveRecord
             array('password', 'required', 'on' => 'insert'),
             array('username, email, active', 'required'),
             array('username', 'unique'),
-            array('active, a_id, level', 'numerical', 'integerOnly' => true),
+            array('active, a_id, level, role_id', 'numerical', 'integerOnly' => true),
             array('username', 'length', 'max' => 30),
             array('password', 'length', 'max' => 22),
             array('firstname, middlename, lastname, phone,skype', 'length', 'max' => 20),
@@ -65,6 +66,7 @@ class User extends CActiveRecord
             array('update_time', 'default', 'setOnEmpty' => false, 'value' => date("Y-m-d H:i:s"), 'on' => 'update'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
+            array('role_id', 'safe'),
             array('id, a_id, username, password, email, active, level, create_time, update_time', 'safe', 'on' => 'search'),
         );
     }
@@ -98,6 +100,7 @@ class User extends CActiveRecord
         return array(
             'id' => 'ID',
             'username' => 'Username',
+            'role_id' => 'Role',
             'password' => 'Password',
             'email' => 'Email',
             'active' => 'Active',
@@ -148,6 +151,7 @@ class User extends CActiveRecord
         $criteria->compare('id', $this->id);
         $criteria->compare('a_id', $this->a_id);
         $criteria->compare('username', $this->username, true);
+        $criteria->compare('role_id', $this->role_id);
         $criteria->compare('password', $this->password, true);
         $criteria->compare('email', $this->email, true);
         $criteria->compare('active', $this->active);
@@ -178,6 +182,7 @@ class User extends CActiveRecord
         $criteria->compare('id', $this->id);
         $criteria->compare('username', $this->username, true);
         $criteria->compare('password', $this->password, true);
+        $criteria->compare('role_id', $this->role_id);
         $criteria->compare('email', $this->email, true);
         $criteria->compare('active', $this->active);
         $criteria->compare('level', $this->level);

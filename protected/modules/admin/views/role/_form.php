@@ -11,8 +11,6 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 
     <?php if (user()->isSuperAdmin()) { ?>
         <?php echo $form->dropdownListRow($model, 'office_id', Utils::getOfficeOptions(), array('class' => 'span5', 'empty' => '-- Select Office --')); ?>
-    <?php } else { ?>
-        <?php echo $form->hiddenField($model, 'office_id'); ?>
     <?php } ?>
 
     <?php echo $form->textFieldRow($model, 'name', array('class' => 'span5', 'maxlength' => 100)); ?>
