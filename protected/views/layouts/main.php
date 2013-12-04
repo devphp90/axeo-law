@@ -23,11 +23,6 @@
                             'label' => Yii::t('app', 'Home'),
                             'url' => array('/site/index')
                         ),
-                        array(
-                            'label' => Yii::t('app', 'MyLoanApps'),
-                            'url' => array('/project'),
-                            'visible' => Yii::app()->user->isUser(),
-                        ),
                     ),
                 ),
                 array(
