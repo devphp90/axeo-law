@@ -61,7 +61,13 @@ return array(
             ),
         ),
         // uncomment the following to use a MySQL database
-
+        'authManager' => array(
+            'class' => 'CDbAuthManager',
+            'connectionID' => 'db',
+            'assignmentTable' => 'auth_assignment',
+            'itemChildTable' => 'auth_item_child',
+            'itemTable' => 'auth_item',
+        ),
         'db' => array(
             'connectionString' => 'mysql:host=localhost;dbname=law',
             'emulatePrepare' => true,

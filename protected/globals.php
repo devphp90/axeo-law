@@ -153,3 +153,18 @@ function randomString($length = 10, $numberOnly = false)
     }
     return $str;
 }
+
+/**
+ * @return CDbAuthManager
+ */
+function auth()
+{
+    $auth = Yii::app()->authManager;
+    return $auth;
+}
+
+function request()
+{
+    $request = Yii::app()->request;
+    return $request;
+}
