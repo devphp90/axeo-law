@@ -36,8 +36,11 @@ class StaffController extends AdminController
                     $model->a_id = $parent;
             }
             
-            if ($model->save())
+            if ($model->save()) {
+                if (!empty($model->role_id))
+                    auth()->assign('role_' . $model->role_id, $model->id);
                 $this->redirect(array('view', 'id' => $model->id));
+            }
         }
 
         $this->render('create', array(
@@ -54,6 +57,7 @@ class StaffController extends AdminController
     {
         $model = $this->loadModel($id);
         $model->unsetAttributes(array('password'));
+        $oldRole = $model->role_id;
         
         Utils::ajaxValidation($model, 'staff-form');
 
@@ -64,8 +68,15 @@ class StaffController extends AdminController
                 $model->level = USER::ROLE_ADMIN;
             }
             
-            if ($model->save())
+            if ($model->save()) {
+                if ($oldRole != $model->role_id) {
+                    if (!empty($model->role_id))
+                        auth()->assign('role_' . $model->role_id, $model->id);
+                    if (!empty($oldRole))
+                        auth()->revoke('role_' . $oldRole, $model->id);
+                }
                 $this->redirect(array('view', 'id' => $model->id));
+            }
         }
 
         $this->render('update', array(

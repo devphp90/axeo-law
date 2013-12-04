@@ -165,7 +165,7 @@ class Utils
     public static function getRoleOptions()
     {
         if (user()->isAdmin())
-            return CHtml::listData(Role::model()->findAllByAttributes(array('id' => user()->officeId)), 'id', 'name');
+            return CHtml::listData(Role::model()->findAllByAttributes(array('office_id' => user()->officeId)), 'id', 'name');
         else
             return CHtml::listData(Role::model()->findAll(), 'id', 'name');
     }
