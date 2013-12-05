@@ -37,6 +37,9 @@
 div.form
 {
 }
+#content  h1 {
+	margin-bottom: 60px;
+}
 
 div.form input,
 div.form textarea,
@@ -157,4 +160,33 @@ div.wide.form .buttons, div.wide.form .hint, div.wide.form .errorMessage
 {
 	clear: left;
 	padding-left: 110px;
+}
+
+.pdf span{ background:green; color:#fff; padding:2px; border-radius:2px; }
+.png span{ background:#361D00; color:#fff; padding:2px;border-radius:2px; }
+.mp4 span{ background:#361D00; color:#fff; padding:2px;border-radius:2px; }
+.doc span{ background:#FFA133; color:#fff; padding:2px;border-radius:2px; }
+.xls span{ background:#ACE552; color:#fff; padding:2px;border-radius:2px; }
+
+
+
+#submenu-action {
+    border-radius: 3px;
+    height: 37px;
+    margin-top: 52px;
+    padding: 0;
+    position: absolute;
+    width: 92%;
+    z-index: 1;
+}
+
+
+.grid-view .summary {
+    bottom: 7px;
+    margin-bottom: 5px;
+    position: relative;
+    text-align: right;
+    z-index: 2;
+	width: 200px;
+	float: right;
 }

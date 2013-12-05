@@ -8,7 +8,7 @@
 
 <?php
 
-if (!$model->isNewRecord && $model->level != User::ROLE_SUPER_ADMIN && $model->a_id != 0) {
+if (!$model->isNewRecord && $model->level != User::ROLE_SUPER_ADMIN && $model->office_id != 0) {
     echo CHtml::checkBox('isAdmin');
 }
 ?>
