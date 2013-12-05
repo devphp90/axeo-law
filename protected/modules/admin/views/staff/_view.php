@@ -20,7 +20,7 @@
 	<?php echo CHtml::encode($data->level); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('create_time')); ?>:</b>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('created_time')); ?>:</b>
 	<?php echo CHtml::encode($data->create_time); ?>
 	<br />
 

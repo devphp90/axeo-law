@@ -13,7 +13,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 
 <?php
 if (user()->isAdmin())
-    $clients = Client::model()->findAll('office_id = :officeId', array(':officeId' => user()->parent));
+    $clients = Client::model()->findAll('office_id = :officeId', array(':officeId' => user()->officeId));
 else 
     $clients = Client::model()->findAll();
 ?>

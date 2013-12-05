@@ -5,8 +5,11 @@
  *
  * The followings are the available columns in table 'user':
  * @property integer $id
- * @property integer $a_id
+ * @property integer $office_id
  * @property string $username
+ * @property string $first_name
+ * @property string $middle_name
+ * @property string $last_name
  * @property integer $role_id
  * @property string $password
  * @property string $email
@@ -42,7 +45,7 @@ class User extends CActiveRecord
      */
     public function tableName()
     {
-        return 'user';
+        return 'users';
     }
 
     /**
@@ -56,18 +59,18 @@ class User extends CActiveRecord
             array('password', 'required', 'on' => 'insert'),
             array('username, email, active', 'required'),
             array('username', 'unique'),
-            array('active, a_id, level, role_id', 'numerical', 'integerOnly' => true),
+            array('active, office_id, level, role_id', 'numerical', 'integerOnly' => true),
             array('username', 'length', 'max' => 30),
             array('password', 'length', 'max' => 22),
-            array('firstname, middlename, lastname, phone,skype', 'length', 'max' => 20),
-            array('email,address', 'length', 'max' => 100),
+            array('first_name, middle_name, last_name, phone,skype', 'length', 'max' => 20),
+            array('email, address', 'length', 'max' => 100),
             array('email', 'email'),
-            array('create_time', 'default', 'setOnEmpty' => false, 'value' => date("Y-m-d H:i:s"), 'on' => 'insert'),
-            array('update_time', 'default', 'setOnEmpty' => false, 'value' => date("Y-m-d H:i:s"), 'on' => 'update'),
+            array('created_time', 'default', 'setOnEmpty' => false, 'value' => date("Y-m-d H:i:s"), 'on' => 'insert'),
+            array('updated_time', 'default', 'setOnEmpty' => false, 'value' => date("Y-m-d H:i:s"), 'on' => 'update'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('role_id', 'safe'),
-            array('id, a_id, username, password, email, active, level, create_time, update_time', 'safe', 'on' => 'search'),
+            array('id, office_id, username, first_name, middle_name, last_name, password, email, active, level, created_time, updated_time', 'safe', 'on' => 'search'),
         );
     }
 
@@ -89,7 +92,7 @@ class User extends CActiveRecord
 
     public function getParentId($uid)
     {
-        return User::model()->findByPk($uid)->a_id;
+        return User::model()->findByPk($uid)->office_id;
     }
 
     /**
@@ -102,11 +105,14 @@ class User extends CActiveRecord
             'username' => 'Username',
             'role_id' => 'Role',
             'password' => 'Password',
+            'first_name' => 'First Name',
+            'middle_name' => 'Middle Name',
+            'last_name' => 'Last Name',
             'email' => 'Email',
             'active' => 'Active',
             'level' => 'Level',
-            'create_time' => 'Create Time',
-            'update_time' => 'Update Time',
+            'created_time' => 'Created Time',
+            'updated_time' => 'Updated Time',
         );
     }
 
@@ -133,31 +139,30 @@ class User extends CActiveRecord
 
         $criteria = new CDbCriteria;
         
-        $criteria->condition = 'a_id = :aId';
+        $criteria->condition = 'office_id = :officeId';
         
-        if (user()->isSuperAdmin()) {
-            $criteria->params = array(':aId' => 0);
-        }
+        if (user()->isSuperAdmin())
+            $criteria->params = array(':officeId' => 0);
         
         if (user()->isAdmin()) {
-            if (user()->getParent() == 0) {
-                $criteria->params = array(':aId' => user()->id);
-            } else
-                $criteria->params = array(':aId' => user()->getParent());
+            $criteria->params = array(':officeId' => user()->officeId);
             $criteria->condition .= ' OR id = :id';
             $criteria->params[':id'] = user()->id;
         }
 
         $criteria->compare('id', $this->id);
-        $criteria->compare('a_id', $this->a_id);
+        $criteria->compare('office_id', $this->office_id);
         $criteria->compare('username', $this->username, true);
+        $criteria->compare('first_name', $this->first_name, true);
+        $criteria->compare('middle_name', $this->middle_name, true);
+        $criteria->compare('last_name', $this->last_name, true);
         $criteria->compare('role_id', $this->role_id);
         $criteria->compare('password', $this->password, true);
         $criteria->compare('email', $this->email, true);
         $criteria->compare('active', $this->active);
         $criteria->compare('level', $this->level);
-        $criteria->compare('create_time', $this->create_time, true);
-        $criteria->compare('update_time', $this->update_time, true);
+        $criteria->compare('created_time', $this->created_time, true);
+        $criteria->compare('updated_time', $this->updated_time, true);
         
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -175,45 +180,26 @@ class User extends CActiveRecord
 
         $criteria = new CDbCriteria;
 
-        $criteria->condition = 'a_id=:a_id';
+        $criteria->condition = 'office_id=:office_id';
         $criteria->params = array(
-            ':a_id' => Yii::app()->user->id
+            ':office_id' => user()->officeId,
         );
         $criteria->compare('id', $this->id);
         $criteria->compare('username', $this->username, true);
+        $criteria->compare('first_name', $this->first_name, true);
+        $criteria->compare('middle_name', $this->middle_name, true);
+        $criteria->compare('last_name', $this->last_name, true);
         $criteria->compare('password', $this->password, true);
         $criteria->compare('role_id', $this->role_id);
         $criteria->compare('email', $this->email, true);
         $criteria->compare('active', $this->active);
         $criteria->compare('level', $this->level);
-        $criteria->compare('create_time', $this->create_time, true);
-        $criteria->compare('update_time', $this->update_time, true);
+        $criteria->compare('created_time', $this->created_time, true);
+        $criteria->compare('updated_time', $this->updated_time, true);
 
         return new CActiveDataProvider($this, array(
                     'criteria' => $criteria,
                 ));
-    }
-
-    /**
-     * Retrieves a list of models based on the current search/filter conditions.
-     * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
-     */
-    public function roleSearch($uid)
-    {
-        // Warning: Please modify the following code to remove attributes that
-        // should not be searched.
-
-        $criteria = new CDbCriteria;
-
-        $criteria->condition = 'uid=:uid';
-        $criteria->params = array(
-            ':uid' => $uid
-        );
-
-
-        return new CActiveDataProvider('UserRole', array(
-            'criteria' => $criteria,
-        ));
     }
 
 }

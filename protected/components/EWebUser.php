@@ -24,10 +24,10 @@ class EWebUser extends CWebUser
         return false;
     }
     
-    public function getParent()
+    public function getOfficeId()
     {
         $user = User::model()->findByPk(user()->id);
-        return $user->a_id;
+        return $user->office_id;
     }
     
     public function isAdmin()
@@ -47,12 +47,6 @@ class EWebUser extends CWebUser
             return null;
         
         return User::model()->findByPk(user()->id);
-    }
-
-    public function getOfficeId()
-    {
-        $user = User::model()->findByPk(user()->id);
-        return $user->a_id;
     }
     
     public function getRole()

@@ -14,7 +14,7 @@ class RoleController extends AdminController
         if (isset($_POST['Role'])) {
             $model->attributes = $_POST['Role'];
             if (user()->isAdmin())
-                $model->office_id = user()->getParent();
+                $model->office_id = user()->officeId;
             if ($model->save()) {
                 $auth = app()->authManager;
                 $auth->createRole('role_'.$model->id);

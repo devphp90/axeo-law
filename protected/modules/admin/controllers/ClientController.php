@@ -8,7 +8,7 @@ class ClientController extends AdminController
     {
         $model = new Client();
         if (user()->isAdmin())
-            $model->office_id = user()->getParent();
+            $model->office_id = user()->officeId;
 
         Utils::ajaxValidation($model, 'client-form');
 

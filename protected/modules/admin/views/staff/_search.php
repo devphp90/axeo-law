@@ -15,9 +15,9 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 
     <?php echo $form->textFieldRow($model, 'level', array('class' => 'span5')); ?>
 
-    <?php echo $form->textFieldRow($model, 'create_time', array('class' => 'span5')); ?>
+    <?php echo $form->textFieldRow($model, 'created_time', array('class' => 'span5')); ?>
 
-    <?php echo $form->textFieldRow($model, 'update_time', array('class' => 'span5')); ?>
+    <?php echo $form->textFieldRow($model, 'updated_time', array('class' => 'span5')); ?>
     
 
 <div class="form-actions">

@@ -48,8 +48,8 @@ $this->widget('bootstrap.widgets.TbDetailView', array(
     'attributes' => array(
         'id',
         'username',
-        'firstname',
-        'lastname',
+        'first_name',
+        'last_name',
         'email',
     ),
 ));

@@ -29,11 +29,7 @@ class StaffController extends AdminController
             $model->attributes = $_POST['User'];
             
             if (user()->isAdmin()) {
-                $parent = user()->getParent();
-                if ($parent == 0)
-                    $model->a_id = user()->id;
-                else
-                    $model->a_id = $parent;
+                $model->office_id = user()->officeId;
             }
             
             if ($model->save()) {

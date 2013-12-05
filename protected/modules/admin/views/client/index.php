@@ -44,18 +44,6 @@ $('.search-form form').submit(function(){
 });
 ");
 
-$this->widget('ext.eguiders.EGuider', array(
-    'id' => 'first',
-    'title' => 'Add Client',
-    'description' => '<b>To add a new Client,  click Create.</b>',
-    'overlay' => true,
-    'xButton' => true,
-    'show' => true,
-    'autoFocus' => true,
-    'attachTo' => '#create-button',
-    'position' => 3,
-        )
-);
 ?>
 
 <h1>Manage Clients</h1>

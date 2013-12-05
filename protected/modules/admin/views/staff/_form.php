@@ -17,16 +17,16 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 
     <?php echo $form->textFieldRow($model, 'email', array('class' => 'span5', 'maxlength' => 100)); ?>
     
-    <?php echo $form->textFieldRow($model, 'firstname', array('class' => 'span5', 'maxlength' => 100)); ?>
+    <?php echo $form->textFieldRow($model, 'first_name', array('class' => 'span5', 'maxlength' => 100)); ?>
     
-    <?php echo $form->textFieldRow($model, 'lastname', array('class' => 'span5', 'maxlength' => 100)); ?>
+    <?php echo $form->textFieldRow($model, 'last_name', array('class' => 'span5', 'maxlength' => 100)); ?>
     
     <?php echo $form->dropdownListRow($model, 'role_id', Utils::getRoleOptions(), array('class' => 'span5', 'empty' => '-- Select Role --')); ?>
 
     <?php echo $form->textFieldRow($model, 'active', array('class' => 'span5')); ?>
 
     <?php
-    if (!$model->isNewRecord && $model->level != User::ROLE_SUPER_ADMIN && $model->a_id != 0) { ?>
+    if (!$model->isNewRecord && $model->level != User::ROLE_SUPER_ADMIN && $model->office_id != 0) { ?>
     <label class="required">Is Admin</label>
     <?php
         echo CHtml::checkBox('isAdmin');

@@ -93,7 +93,7 @@ class Client extends CActiveRecord
         $criteria = new CDbCriteria;
         
         if (user()->isAdmin()) {
-            $office_id = user()->getParent();
+            $office_id = user()->officeId;
             $criteria->condition = 'office_id = :officeId';
             $criteria->params = array(':officeId' => $office_id);
         } else
@@ -114,7 +114,7 @@ class Client extends CActiveRecord
     public function getNameFilterOptions()
     {
         if (user()->isAdmin())
-            return CHtml::listData(self::model()->findAllByAttributes(array('office_id' => user()->getParent())), 'id', 'name');
+            return CHtml::listData(self::model()->findAllByAttributes(array('office_id' => user()->officeId)), 'id', 'name');
         else
             return CHtml::listData(self::model()->findAll(), 'name', 'name');
     }

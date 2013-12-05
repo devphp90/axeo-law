@@ -86,7 +86,7 @@ class Matter extends CActiveRecord
         $criteria = new CDbCriteria;
         
         if (user()->isAdmin()) {
-            $office_id = user()->getParent();
+            $office_id = user()->officeId;
             $criteria->condition = 'office_id = :officeId';
             $criteria->params = array(':officeId' => $office_id);
         } else

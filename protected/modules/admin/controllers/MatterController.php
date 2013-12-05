@@ -9,7 +9,7 @@ class MatterController extends AdminController
         $model = new Matter();
         
         if (user()->isAdmin())
-            $model->office_id = user()->getParent();
+            $model->office_id = user()->officeId;
 
         Utils::ajaxValidation($model, 'matter-form');
         

@@ -67,8 +67,8 @@ $this->widget('bootstrap.widgets.TbGridView', array(
             'type' => 'raw',
         ),
         'email',
-        'firstname',
-        'lastname',
+        'first_name',
+        'last_name',
         'id',
         array(
             'class' => 'bootstrap.widgets.TbButtonColumn',
