@@ -32,7 +32,7 @@ class OfficeController extends AdminController
             $model->attributes = $_POST['Office'];
             
             if ($model->save()) {
-                $user->a_id = $model->id;
+                $user->office_id = $model->id;
                 $user->level = User::ROLE_ADMIN;
                 if ($user->save()) {
                     $model->admin_id = $user->id;
