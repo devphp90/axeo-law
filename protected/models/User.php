@@ -18,9 +18,8 @@
  * @property string $create_time
  * @property string $update_time
  */
-class User extends CActiveRecord
+class User extends ActiveRecord
 {
-
     const TYPE_USER = 1;
     const TYPE_ACCOUNT = 2;
     

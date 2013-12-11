@@ -10,7 +10,7 @@
  * @property string $address
  * @property string $phone
  */
-class Office extends CActiveRecord
+class Office extends ActiveRecord
 {
     public $adminEmail;
     public $adminUsername;

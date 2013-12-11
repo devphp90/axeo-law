@@ -10,7 +10,7 @@
  * @property string $name
  * @property string $phone
  */
-class Matter extends CActiveRecord
+class Matter extends ActiveRecord
 {
     /**
      * Returns the static model of the specified AR class.
@@ -98,8 +98,8 @@ class Matter extends CActiveRecord
         $criteria->compare('phone', $this->id);
 
         return new CActiveDataProvider($this, array(
-                    'criteria' => $criteria,
-                ));
+            'criteria' => $criteria,
+        ));
     }
 
     public function clientSearch($id)

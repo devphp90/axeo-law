@@ -12,8 +12,9 @@
  * @property string $skype
  * @property string $facebook
  */
-class Client extends CActiveRecord
+class Client extends ActiveRecord
 {
+
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -91,14 +92,14 @@ class Client extends CActiveRecord
         // should not be searched.
 
         $criteria = new CDbCriteria;
-        
+
         if (user()->isAdmin()) {
             $office_id = user()->officeId;
             $criteria->condition = 'office_id = :officeId';
             $criteria->params = array(':officeId' => $office_id);
         } else
             $criteria->compare('office_id', $this->office_id);
-        
+
         $criteria->compare('id', $this->id);
         $criteria->compare('name', $this->name, true);
         $criteria->compare('phone', $this->phone, true);
@@ -107,8 +108,8 @@ class Client extends CActiveRecord
         $criteria->compare('facebook', $this->facebook, true);
 
         return new CActiveDataProvider($this, array(
-                    'criteria' => $criteria,
-                ));
+            'criteria' => $criteria,
+        ));
     }
 
     public function getNameFilterOptions()
@@ -118,5 +119,5 @@ class Client extends CActiveRecord
         else
             return CHtml::listData(self::model()->findAll(), 'name', 'name');
     }
-    
+
 }

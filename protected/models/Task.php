@@ -1,19 +1,25 @@
 <?php
 
 /**
- * This is the model class for table "product".
+ * This is the model class for table "tasks".
  *
- * The followings are the available columns in table 'product':
+ * The followings are the available columns in table 'tasks':
  * @property integer $id
- * @property string $name
+ * @property integer $office_id
+ * @property string $title
+ * @property string $description
+ * @property string $start_time
+ * @property string $end_time
+ * @property integer $all_date
+ * @property integer $created_time
  */
-class Product extends ActiveRecord
+class Task extends ActiveRecord
 {
 
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
-     * @return Product the static model class
+     * @return Task the static model class
      */
     public static function model($className = __CLASS__)
     {
@@ -25,7 +31,7 @@ class Product extends ActiveRecord
      */
     public function tableName()
     {
-        return 'product';
+        return 'tasks';
     }
 
     /**
@@ -36,10 +42,13 @@ class Product extends ActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('name', 'length', 'max' => 255),
+            array('office_id, title, start_time, end_time, created_time', 'required'),
+            array('office_id, all_date, created_time', 'numerical', 'integerOnly' => true),
+            array('title', 'length', 'max' => 32),
+            array('description', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, name', 'safe', 'on' => 'search'),
+            array('id, office_id, title, description, start_time, end_time, all_date, created_time', 'safe', 'on' => 'search'),
         );
     }
 
@@ -61,7 +70,13 @@ class Product extends ActiveRecord
     {
         return array(
             'id' => 'ID',
-            'name' => 'Name',
+            'office_id' => 'Office',
+            'title' => 'Title',
+            'description' => 'Description',
+            'start_time' => 'Start Time',
+            'end_time' => 'End Time',
+            'all_date' => 'All Date',
+            'created_time' => 'Created Time',
         );
     }
 
@@ -77,7 +92,13 @@ class Product extends ActiveRecord
         $criteria = new CDbCriteria;
 
         $criteria->compare('id', $this->id);
-        $criteria->compare('name', $this->name, true);
+        $criteria->compare('office_id', $this->office_id);
+        $criteria->compare('title', $this->title, true);
+        $criteria->compare('description', $this->description, true);
+        $criteria->compare('start_time', $this->start_time, true);
+        $criteria->compare('end_time', $this->end_time, true);
+        $criteria->compare('all_date', $this->all_date);
+        $criteria->compare('created_time', $this->created_time);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,

@@ -12,7 +12,7 @@
  * @property User $a
  * @property RolePermission[] $rolePermissions
  */
-class Role extends CActiveRecord
+class Role extends ActiveRecord
 {
     /**
      * Returns the static model of the specified AR class.

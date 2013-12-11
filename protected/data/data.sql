@@ -1,17 +1,26 @@
+-- phpMyAdmin SQL Dump
+-- version 4.0.4.1
+-- http://www.phpmyadmin.net
+--
+-- Host: 127.0.0.1
+-- Generation Time: Dec 11, 2013 at 04:44 PM
+-- Server version: 5.6.11
+-- PHP Version: 5.5.3
 
--- --------------------------------------------------------
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
 
 --
--- Table structure for table `auth_assignment`
+-- Database: `law`
 --
-
-CREATE TABLE IF NOT EXISTS `auth_assignment` (
-  `itemname` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  `userid` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  `bizrule` text COLLATE utf8_unicode_ci,
-  `data` text COLLATE utf8_unicode_ci,
-  PRIMARY KEY (`itemname`,`userid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+CREATE DATABASE IF NOT EXISTS `law` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+USE `law`;
 
 --
 -- Dumping data for table `auth_assignment`
@@ -19,21 +28,6 @@ CREATE TABLE IF NOT EXISTS `auth_assignment` (
 
 INSERT INTO `auth_assignment` (`itemname`, `userid`, `bizrule`, `data`) VALUES
 ('role_5', '9', NULL, 'N;');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `auth_item`
---
-
-CREATE TABLE IF NOT EXISTS `auth_item` (
-  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  `type` int(11) NOT NULL,
-  `description` text COLLATE utf8_unicode_ci,
-  `bizrule` text COLLATE utf8_unicode_ci,
-  `data` text COLLATE utf8_unicode_ci,
-  PRIMARY KEY (`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `auth_item`
@@ -58,20 +52,8 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `bizrule`, `data`) VALUE
 ('document.view', 0, '', NULL, 'N;'),
 ('document.delete', 0, '', NULL, 'N;'),
 ('role_5', 2, '', NULL, 'N;'),
-('role_6', 2, '', NULL, 'N;');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `auth_item_child`
---
-
-CREATE TABLE IF NOT EXISTS `auth_item_child` (
-  `parent` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  `child` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`parent`,`child`),
-  KEY `child` (`child`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+('role_6', 2, '', NULL, 'N;'),
+('role_8', 2, '', NULL, 'N;');
 
 --
 -- Dumping data for table `auth_item_child`
@@ -97,24 +79,23 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('role_6', 'client.view'),
 ('role_6', 'document.view'),
 ('role_6', 'matter.view'),
-('role_6', 'staff.view');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `clients`
---
-
-CREATE TABLE IF NOT EXISTS `clients` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `office_id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `phone` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `skype` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `facebook` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
+('role_6', 'staff.view'),
+('role_8', 'client.create'),
+('role_8', 'client.delete'),
+('role_8', 'client.update'),
+('role_8', 'client.view'),
+('role_8', 'document.create'),
+('role_8', 'document.delete'),
+('role_8', 'document.update'),
+('role_8', 'document.view'),
+('role_8', 'matter.create'),
+('role_8', 'matter.delete'),
+('role_8', 'matter.update'),
+('role_8', 'matter.view'),
+('role_8', 'staff.create'),
+('role_8', 'staff.delete'),
+('role_8', 'staff.update'),
+('role_8', 'staff.view');
 
 --
 -- Dumping data for table `clients`
@@ -126,22 +107,6 @@ INSERT INTO `clients` (`id`, `office_id`, `name`, `phone`, `email`, `skype`, `fa
 (3, 4, 'Client One', '123-123-1234', 'test@test.com', '', ''),
 (4, 4, 'Client Two', '123-123-1234', 'test@test.com', '', '');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `customer`
---
-
-CREATE TABLE IF NOT EXISTS `customer` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `u_id` int(11) NOT NULL,
-  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `phone` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `u_id` (`u_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
-
 --
 -- Dumping data for table `customer`
 --
@@ -150,23 +115,6 @@ INSERT INTO `customer` (`id`, `u_id`, `name`, `email`, `phone`) VALUES
 (1, 4, 'odin', 'odin@dff.com', '123123123'),
 (2, 6, 'axeo', 'odin@df.ddcom', '12309df'),
 (3, 4, 'axeo', 'odin@df.com', '123123');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `document`
---
-
-CREATE TABLE IF NOT EXISTS `document` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(256) COLLATE utf8_unicode_ci NOT NULL,
-  `description` varchar(256) COLLATE utf8_unicode_ci NOT NULL,
-  `content` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `size` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `type` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `created_date` date NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `document`
@@ -178,102 +126,6 @@ INSERT INTO `document` (`id`, `name`, `description`, `content`, `size`, `type`, 
 (8, 'test1', 'test1', 'NDA - Axeo Systems.pdf', '28.3095703125', 'pdf', '2013-11-18'),
 (9, 'test1', 'test1', 'IMG_08112013_094743.png', '603.6298828125', 'png', '2013-11-11'),
 (10, 'Test', 'Just Test', 'IMG_13112013_080006.png', '47.296875', 'png', '2013-11-18');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `documents`
---
-
-CREATE TABLE IF NOT EXISTS `documents` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `description` text,
-  `file_id` int(10) NOT NULL,
-  `date` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
-
---
--- Dumping data for table `documents`
---
-
-INSERT INTO `documents` (`id`, `user_id`, `name`, `description`, `file_id`, `date`) VALUES
-(1, 1, 'Document1', 'this is a test document1', 0, '2013-11-06 00:00:00');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `document_pdfs`
---
-
-CREATE TABLE IF NOT EXISTS `document_pdfs` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `document_id` int(10) unsigned NOT NULL,
-  `file_name` varchar(255) NOT NULL,
-  `file_type` varchar(255) NOT NULL,
-  `file_size` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
-
---
--- Dumping data for table `document_pdfs`
---
-
-INSERT INTO `document_pdfs` (`id`, `document_id`, `file_name`, `file_type`, `file_size`) VALUES
-(4, 1, '1383752966Y1 2013.pdf', 'application/pdf', 221723);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `document_photos`
---
-
-CREATE TABLE IF NOT EXISTS `document_photos` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `document_id` int(10) unsigned NOT NULL,
-  `file_name` varchar(255) NOT NULL,
-  `file_type` varchar(255) NOT NULL,
-  `file_size` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
-
---
--- Dumping data for table `document_photos`
---
-
-INSERT INTO `document_photos` (`id`, `document_id`, `file_name`, `file_type`, `file_size`) VALUES
-(2, 1, '138374962713784018102013-02-11 17.14.50.jpg', 'image/jpeg', 38051),
-(3, 1, '13837502141377920310forehand.png', 'image/png', 230370);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `document_videos`
---
-
-CREATE TABLE IF NOT EXISTS `document_videos` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `document_id` int(10) unsigned NOT NULL,
-  `file_name` varchar(255) NOT NULL,
-  `file_type` varchar(255) NOT NULL,
-  `file_size` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `lenders`
---
-
-CREATE TABLE IF NOT EXISTS `lenders` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `phone` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `lenders`
@@ -291,22 +143,6 @@ INSERT INTO `lenders` (`id`, `name`, `phone`) VALUES
 (9, 'fewfsdg', 'dsgd'),
 (10, 'fdsf', 'dsfsd');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `matters`
---
-
-CREATE TABLE IF NOT EXISTS `matters` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `office_id` int(11) NOT NULL,
-  `client_id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `phone` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `borrower_id` (`client_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=8 ;
-
 --
 -- Dumping data for table `matters`
 --
@@ -319,39 +155,13 @@ INSERT INTO `matters` (`id`, `office_id`, `client_id`, `name`, `phone`) VALUES
 (6, 4, 15, 'Matter 2', ''),
 (7, 4, 2, 'Office Lease', '');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `offices`
---
-
-CREATE TABLE IF NOT EXISTS `offices` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `admin_id` int(11) DEFAULT NULL,
-  `address` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `phone` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
-
 --
 -- Dumping data for table `offices`
 --
 
 INSERT INTO `offices` (`id`, `name`, `admin_id`, `address`, `phone`) VALUES
-(4, 'Office Demo', 9, 'Ho Chi Minh', '0977409352');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `product`
---
-
-CREATE TABLE IF NOT EXISTS `product` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+(4, 'Office Demo', 9, 'Ho Chi Minh', '0977409352'),
+(6, 'Ho Chi Minh', 887, 'To Hien Thanh, District 10', '0977409352');
 
 --
 -- Dumping data for table `product`
@@ -361,21 +171,6 @@ INSERT INTO `product` (`id`, `name`) VALUES
 (1, 'Samsumg Galaxy S4'),
 (2, 'Apple iPad5');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `project`
---
-
-CREATE TABLE IF NOT EXISTS `project` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `c_id` int(11) NOT NULL,
-  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `description` text COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `c_id` (`c_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
-
 --
 -- Dumping data for table `project`
 --
@@ -383,20 +178,6 @@ CREATE TABLE IF NOT EXISTS `project` (
 INSERT INTO `project` (`id`, `c_id`, `name`, `description`) VALUES
 (1, 1, 'project1', 'project1'),
 (2, 3, 'AXEO Project #1', 'AXEO Project #1');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `role`
---
-
-CREATE TABLE IF NOT EXISTS `role` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `office_id` int(11) NOT NULL,
-  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `aid` (`office_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `role`
@@ -406,35 +187,8 @@ INSERT INTO `role` (`id`, `office_id`, `name`) VALUES
 (4, 4, 'nurse'),
 (5, 4, 'Role 1'),
 (6, 4, 'Role 2'),
-(7, 4, 'Role 3');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `users`
---
-
-CREATE TABLE IF NOT EXISTS `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `office_id` int(11) NOT NULL,
-  `role_id` int(11) DEFAULT NULL,
-  `username` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
-  `password` char(32) COLLATE utf8_unicode_ci NOT NULL,
-  `email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `first_name` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  `middle_name` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  `last_name` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  `phone` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  `address` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
-  `skype` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  `active` tinyint(1) NOT NULL,
-  `level` tinyint(2) NOT NULL,
-  `created_time` datetime NOT NULL,
-  `updated_time` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `username` (`username`),
-  KEY `office_id` (`office_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=887 ;
+(7, 4, 'Role 3'),
+(8, 6, 'Admin');
 
 --
 -- Dumping data for table `users`
@@ -1322,5 +1076,9 @@ INSERT INTO `users` (`id`, `office_id`, `role_id`, `username`, `password`, `emai
 (881, 4, NULL, 'vorarad70', '9b5cceaf5f4801c7c3b977a04171d6e1', 'vorarad70@axeo.net', '', '', '', '', '', '', 1, 2, '2013-01-12 12:03:27', '0000-00-00 00:00:00'),
 (882, 4, NULL, 'warnhat23', '9959fa5ed7ff2a185966550ea9f41650', 'warnhat23@axeo.net', '', '', '', '', '', '', 1, 2, '2013-01-12 12:03:27', '0000-00-00 00:00:00'),
 (883, 4, NULL, 'braghos45', 'c4088f5defd5b7335f6f2e80884f9d14', 'braghos45@axeo.net', '', '', '', '', '', '', 1, 2, '2013-01-12 12:03:27', '0000-00-00 00:00:00'),
-(886, 4, NULL, 'demo-user', '0d4096d56c45d4f633217a1b7cce679b', 'info@axeo.com', '', '', '', '', '', '', 1, 0, '2013-11-18 10:55:08', '0000-00-00 00:00:00');
+(886, 4, NULL, 'demo-user', '0d4096d56c45d4f633217a1b7cce679b', 'info@axeo.com', '', '', '', '', '', '', 1, 0, '2013-11-18 10:55:08', '0000-00-00 00:00:00'),
+(887, 6, NULL, 'admin', 'bbb8f9ed8473152ea23aac7adb700b04', 'admin@yahoo.com', '', '', '', '', '', '', 1, 2, '2013-12-11 16:22:26', '2013-12-11 16:25:14');
 
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
