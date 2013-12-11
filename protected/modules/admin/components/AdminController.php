@@ -18,7 +18,7 @@ class AdminController extends Controller
         if ($this->id == 'default')
             return parent::beforeAction($action);
         
-        if(!user()->isGuest && (user()->role == User::ROLE_SUPER_ADMIN)) {
+        if(!user()->isGuest && (user()->role == User::ROLE_SUPER_ADMIN || user()->role == User::ROLE_ADMIN)) {
             return parent::beforeAction($action);
         }
         

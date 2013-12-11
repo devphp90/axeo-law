@@ -42,7 +42,7 @@ class Task extends ActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('office_id, title, start_time, end_time, created_time', 'required'),
+            array('office_id, title, start_time, end_time', 'required'),
             array('office_id, all_date, created_time', 'numerical', 'integerOnly' => true),
             array('title', 'length', 'max' => 32),
             array('description', 'safe'),

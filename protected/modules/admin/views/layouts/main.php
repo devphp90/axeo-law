@@ -41,17 +41,18 @@
                         array(
                             'label' => Yii::t('app', 'Clients'),
                             'url' => array('/admin/client'),
-                        //'visible'=>Yii::app()->user->isAdmin(),
                         ),
                         array(
                             'label' => Yii::t('app', 'Matters'),
                             'url' => array('/admin/matter'),
-                        //'visible'=>Yii::app()->user->isAdmin(),
                         ),
                         array(
                             'label' => Yii::t('app', 'Documents'),
                             'url' => array('/admin/document'),
-                        //'visible'=>Yii::app()->user->isAdmin(),
+                        ),
+                        array(
+                            'label' => Yii::t('app', 'Calendar'),
+                            'url' => array('/admin/calendar'),
                         ),
                     ),
                 ),
