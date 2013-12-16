@@ -15,7 +15,9 @@
  */
 class Task extends ActiveRecord
 {
-
+    const ALL_DATE_YES = 1;
+    const ALL_DATE_NO = 0;
+    
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -45,7 +47,7 @@ class Task extends ActiveRecord
             array('office_id, title, start_time, end_time', 'required'),
             array('office_id, all_date, created_time', 'numerical', 'integerOnly' => true),
             array('title', 'length', 'max' => 32),
-            array('description', 'safe'),
+            array('description, all_date', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('id, office_id, title, description, start_time, end_time, all_date, created_time', 'safe', 'on' => 'search'),

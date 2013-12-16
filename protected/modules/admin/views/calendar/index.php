@@ -1,10 +1,29 @@
 <?php
+cs()->registerCoreScript('jquery.ui');
 cs()->registerScriptFile('/js/fullcalendar/fullcalendar.min.js');
 cs()->registerCssFile('/css/fullcalendar/fullcalendar.css');
 cs()->registerCssFile('/css/fullcalendar/fullcalendar.print.css');
+
+$events = $this->getEventData();
 ?>
 <div id='calendar'></div>
 <script>
+    function padStr(i)
+    {
+        return (i < 10) ? "0" + i : "" + i;
+    }
+    function printDate(date)
+    {
+        var dateStr = padStr(date.getFullYear()) + '-' +
+        padStr(1 + date.getMonth()) + '-' +
+        padStr(date.getDate()) + ' ' +
+        padStr(date.getHours()) + ':' +
+        padStr(date.getMinutes()) + ':' +
+        padStr(date.getSeconds());
+
+        return dateStr;
+    }
+    
     $(document).ready(function() {
         var date = new Date();
         var d = date.getDate();
@@ -13,59 +32,135 @@ cs()->registerCssFile('/css/fullcalendar/fullcalendar.print.css');
 		
         $('#calendar').fullCalendar({
             header: {
-                left: 'prev,next today',
+                left: 'today prev,next',
                 center: 'title',
-                right: 'month,agendaWeek,agendaDay'
+                right: 'agendaWeek,month,agendaDay',
+                selectable: true
             },
+            defaultView: 'agendaWeek',
             editable: true,
-            events: [
-                {
-                    title: 'All Day Event',
-                    start: new Date(y, m, 1)
-                },
-                {
-                    title: 'Long Event',
-                    start: new Date(y, m, d-5),
-                    end: new Date(y, m, d-2)
-                },
-                {
-                    id: 999,
-                    title: 'Repeating Event',
-                    start: new Date(y, m, d-3, 16, 0),
-                    allDay: false
-                },
-                {
-                    id: 999,
-                    title: 'Repeating Event',
-                    start: new Date(y, m, d+4, 16, 0),
-                    allDay: false
-                },
-                {
-                    title: 'Meeting',
-                    start: new Date(y, m, d, 10, 30),
-                    allDay: false
-                },
-                {
-                    title: 'Lunch',
-                    start: new Date(y, m, d, 12, 0),
-                    end: new Date(y, m, d, 14, 0),
-                    allDay: false
-                },
-                {
-                    title: 'Birthday Party',
-                    start: new Date(y, m, d+1, 19, 0),
-                    end: new Date(y, m, d+1, 22, 30),
-                    allDay: false
-                },
-                {
-                    title: 'Click for Google',
-                    start: new Date(y, m, 28),
-                    end: new Date(y, m, 29),
-                    url: 'http://google.com/'
-                }
-            ]
+            selectable: true,
+            events: <?php echo CJSON::encode($events) ?>,
+            select: function (start, end, allDay) {
+                $('.control-group').removeClass('error');
+                $('.control-group').removeClass('success');
+                $('.help-inline').html('');
+                $('#add_event :input:text').val('');
+                $('#Task_start_time').val(printDate(start));
+                $('#Task_end_time').val(printDate(end));
+                $('#add_event').parent().find('.ui-dialog-title').text('Add Task');
+                $('#add_event').dialog('open');
+            },
+            eventClick: function (event) {
+                currentId = event.id;
+                $('#view_event .event-content').addClass('loading');
+                $('#view_event .event-content').html('');
+                $('#view_event').dialog('open');
+                $('#view_event').parent().find('.ui-dialog-title').text('Loading...');
+                $('#view_event').parent().find('.ui-dialog-buttonset').hide();
+                $.ajax ({
+                    url: '<?php echo url("admin/calendar/view") ?>',
+                    type: 'GET',
+                    data: {id: event.id},
+                    success: function (response) {
+                        $('#view_event .event-content').removeClass('loading');
+                        $('#view_event .event-content').html(response);
+                        $('#view_event').parent().find('.ui-dialog-title').text(event.title);
+                        $('#view_event').parent().find('.ui-dialog-buttonset').show();
+                    }
+                });
+             }
         });
 		
     });
 
 </script>
+
+<?php
+$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+    'id' => 'add_event',
+    // additional javascript options for the dialog plugin
+    'options' => array(
+        'width' => '600',
+        'height' => '500',
+        'title' => 'Add Event',
+        'autoOpen' => false,
+        'buttons' => array(
+            array('text' => 'Submit', 'click' => 'js:function(){ 
+                $("#event_form").submit(); 
+            }'),
+            array('text' => 'Cancel', 'click' => 'js:function(){ $(this).dialog("close"); }'),
+        ),
+    ),
+));
+?>
+<div class="event-content">
+    <?php $this->renderPartial('_form', array('model' => $model));?>
+</div>
+<?php
+$this->endWidget('zii.widgets.jui.CJuiDialog');
+?>
+
+<?php
+$params = array('model' => $model);
+$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+    'id' => 'view_event',
+    'options' => array(
+        'width' => '500',
+        'height' => '300',
+        'title' => 'View Event',
+        'autoOpen' => false,
+        'buttons' => array(
+            array('text' => 'Edit', 'click' => "js:function(){
+                $('#add_event .event-content #event_form').html('');
+                $('#add_event .event-content').addClass('loading');
+                $('#view_event').dialog('close');
+                $('#add_event').dialog('open');
+                $('#add_event').parent().find('.ui-dialog-buttonset').hide();
+                $('#add_event').parent().find('.ui-dialog-title').text('Loading...');
+                $.ajax ({
+                    url: '" . url('admin/calendar/edit') . "',
+                    type: 'GET',
+                    data: {id: currentId },
+                    success: function(response) {
+                        $('#add_event .event-content').removeClass('loading');
+                        form = $(response);
+                        $('#add_event .event-content #event_form').html(form.html());
+                        $('#add_event .event-content #event_form').attr('action', form.attr('action'));
+                        $('#add_event').parent().find('.ui-dialog-title').text('Edit Task: #'+currentId);
+                        $('#add_event').parent().find('.ui-dialog-buttonset').show();
+                        $('#Event_start_time').datetimepicker({'format':'yyyy-mm-dd hh:ii:ss','autoclose':true,'todayBtn':true,'language':'en_us','weekStart':0});
+                        $('#Event_end_time').datetimepicker({'format':'yyyy-mm-dd hh:ii:ss','autoclose':true,'todayBtn':true,'language':'en_us','weekStart':0});
+                    }
+                });
+            }"),
+            array('text' => 'Delete', 'click' => "js:function(){
+                    bootbox.confirm('Are you sure you want to delete this event?', function (confirmed) {
+                        if(confirmed == false)
+                            return;
+                        $('#view_event .event-content').addClass('loading');
+                        $.ajax ({
+                            url: '" . url('admin/calendar/deleteEvent') . "',
+                            type: 'POST',
+                            data: {id: currentId},
+                            success: function (response) {
+                                if(response == 1) {
+                                    $('#calendar').fullCalendar('removeEvents', currentId);
+                                    $('#view_event').dialog('close');
+                                }
+                            }
+                        });
+                    });
+                }"
+            ),
+
+        ),
+    ),
+));
+?>
+<div class="event-content">
+
+</div>
+<?php
+$this->endWidget('zii.widgets.jui.CJuiDialog');
+?>
