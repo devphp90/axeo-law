@@ -29,7 +29,7 @@ class CalendarController extends AdminController
                 'title' => $event->title,
                 'start' => $event->start_time,
                 'end' => $event->end_time,
-                'allDay' => $event->all_date,
+                'allDay' => $event->all_date == Task::ALL_DATE_YES ? true : false,
             );
         }
         
