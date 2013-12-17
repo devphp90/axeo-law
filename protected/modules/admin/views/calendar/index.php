@@ -2,7 +2,7 @@
 cs()->registerCoreScript('jquery.ui');
 cs()->registerScriptFile('/js/fullcalendar/fullcalendar.min.js');
 cs()->registerCssFile('/css/fullcalendar/fullcalendar.css');
-cs()->registerCssFile('/css/fullcalendar/fullcalendar.print.css');
+//cs()->registerCssFile('/css/fullcalendar/fullcalendar.print.css');
 
 $events = $this->getEventData();
 ?>

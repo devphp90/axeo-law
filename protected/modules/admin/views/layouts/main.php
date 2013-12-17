@@ -51,7 +51,7 @@
                             'url' => array('/admin/document'),
                         ),
                         array(
-                            'label' => Yii::t('app', 'Appointment'),
+                            'label' => Yii::t('app', 'Appointments'),
                             'url' => array('/admin/appointment'),
                         ),
                         array(
