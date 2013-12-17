@@ -23,6 +23,8 @@ class CalendarController extends AdminController
         }
         $events = Task::model()->findAll($criteria);
         
+        $taskColor = param('eventColor', 'task');
+        
         foreach ($events as $key => $event) {
             $data[] = array(
                 'id' => $event->id,
@@ -30,6 +32,7 @@ class CalendarController extends AdminController
                 'start' => $event->start_time,
                 'end' => $event->end_time,
                 'allDay' => $event->all_date == Task::ALL_DATE_YES ? true : false,
+                'color' => $taskColor,
             );
         }
         

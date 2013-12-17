@@ -5,6 +5,7 @@
  *
  * The followings are the available columns in table 'appointments':
  * @property integer $id
+ * @property integer $office_id
  * @property string $title
  * @property string $name
  * @property string $phone
@@ -34,12 +35,12 @@ class Appointment extends ActiveRecord
         // will receive user inputs.
         return array(
             array('title, name, description, start_time, end_time', 'required'),
-            array('created_date, status', 'numerical', 'integerOnly' => true),
+            array('created_date, status, office_id', 'numerical', 'integerOnly' => true),
             array('title, name', 'length', 'max' => 32),
             array('phone', 'length', 'max' => 16),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, title, name, phone, description, start_time, end_time, created_date, status', 'safe', 'on' => 'search'),
+            array('id, office_id, title, name, phone, description, start_time, end_time, created_date, status', 'safe', 'on' => 'search'),
         );
     }
 
@@ -61,6 +62,7 @@ class Appointment extends ActiveRecord
     {
         return array(
             'id' => 'ID',
+            'office_id' => 'Office',
             'title' => 'Title',
             'name' => 'Name',
             'phone' => 'Phone',
@@ -91,6 +93,7 @@ class Appointment extends ActiveRecord
         $criteria = new CDbCriteria;
 
         $criteria->compare('id', $this->id);
+        $criteria->compare('office_id', $this->office_id);
         $criteria->compare('title', $this->title, true);
         $criteria->compare('name', $this->name, true);
         $criteria->compare('phone', $this->phone, true);

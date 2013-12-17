@@ -7,6 +7,8 @@ class AppointmentController extends AdminController
     public function actionCreate()
     {
         $model = new Appointment;
+        if (user()->isAdmin())
+            $model->office_id = user()->officeId;
 
         if (isset($_POST['Appointment'])) {
             $model->attributes = $_POST['Appointment'];

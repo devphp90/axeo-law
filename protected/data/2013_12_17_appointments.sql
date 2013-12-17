@@ -1,6 +1,7 @@
 CREATE TABLE `appointments`
 (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`office_id` INT(11) NOT NULL,
 	`title` varchar(32) NOT NULL,
 	`name` varchar(32) NOT NULL,
 	`phone` varchar(16) NULL,
