@@ -1,15 +1,15 @@
 <?php
 
-class LendersController extends AdminController
+class AppointmentController extends AdminController
 {
-    public $modelClass = 'Lenders';
+    public $modelClass = 'Appointment';
     
     public function actionCreate()
     {
-        $model = new Lenders;
+        $model = new Appointment;
 
-        if (isset($_POST['Lenders'])) {
-            $model->attributes = $_POST['Lenders'];
+        if (isset($_POST['Appointment'])) {
+            $model->attributes = $_POST['Appointment'];
             if ($model->save())
                 $this->redirect(array('view', 'id' => $model->id));
         }
@@ -18,13 +18,13 @@ class LendersController extends AdminController
             'model' => $model,
         ));
     }
-    
+
     public function actionUpdate($id)
     {
         $model = $this->loadModel($id);
 
-        if (isset($_POST['Lenders'])) {
-            $model->attributes = $_POST['Lenders'];
+        if (isset($_POST['Appointment'])) {
+            $model->attributes = $_POST['Appointment'];
             if ($model->save())
                 $this->redirect(array('view', 'id' => $model->id));
         }
@@ -36,10 +36,10 @@ class LendersController extends AdminController
 
     public function actionIndex()
     {
-        $model = new Lenders('search');
+        $model = new Appointment('search');
         $model->unsetAttributes();  // clear any default values
-        if (isset($_GET['Lenders']))
-            $model->attributes = $_GET['Lenders'];
+        if (isset($_GET['Appointment']))
+            $model->attributes = $_GET['Appointment'];
 
         $this->render('index', array(
             'model' => $model,

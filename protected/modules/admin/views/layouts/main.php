@@ -51,6 +51,10 @@
                             'url' => array('/admin/document'),
                         ),
                         array(
+                            'label' => Yii::t('app', 'Appointment'),
+                            'url' => array('/admin/appointment'),
+                        ),
+                        array(
                             'label' => Yii::t('app', 'Calendar'),
                             'url' => array('/admin/calendar'),
                         ),

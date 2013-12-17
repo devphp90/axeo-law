@@ -7,40 +7,39 @@
 class AdminController extends Controller
 {
 
-    public $layout = '/layouts/column1';
+    public $layout = '/layouts/column2';
     public $homeUrl = '/admin/';
-
     public $menu = array();
     public $breadcrumbs = array();
-    
+
     protected function beforeAction($action)
     {
         if ($this->id == 'default')
             return parent::beforeAction($action);
-        
-        if(!user()->isGuest && (user()->role == User::ROLE_SUPER_ADMIN || user()->role == User::ROLE_ADMIN)) {
+
+        if (!user()->isGuest && (user()->role == User::ROLE_SUPER_ADMIN || user()->role == User::ROLE_ADMIN)) {
             return parent::beforeAction($action);
         }
-        
+
         $ignoreControllers = array('role');
         if (in_array($this->id, $ignoreControllers))
             return parent::beforeAction($action);
-        
+
         $ignores = array('login', 'search', 'logout');
         if (in_array($action->id, $ignores))
             return parent::beforeAction($action);
-        
+
         $operation = $action->id;
-        if($operation == 'index')
+        if ($operation == 'index')
             $operation = 'view';
         $controller = $this->id;
-        
-        if($controller == 'field')
+
+        if ($controller == 'field')
             $controller = 'entityField';
-        
+
         if (user()->checkAccess($controller . '.' . $operation))
             return parent::beforeAction($action);
-        
+
         throw new CHttpException(403, "You don't have permission to access this page.");
     }
 
@@ -62,7 +61,7 @@ class AdminController extends Controller
             ),
         );
     }
-    
+
     public function actionView($id)
     {
         $this->render('view', array(
@@ -70,7 +69,7 @@ class AdminController extends Controller
         ));
     }
 
-    public function actionDelete($id) 
+    public function actionDelete($id)
     {
         if (Yii::app()->request->isPostRequest) {
             // we only allow deletion via POST request
@@ -83,7 +82,7 @@ class AdminController extends Controller
         else
             throw new CHttpException(400, 'Invalid request. Please do not repeat this request again.');
     }
-    
+
     public function actionBulkDelete()
     {
         $ids = Yii::app()->request->getPost('ids');
@@ -94,4 +93,15 @@ class AdminController extends Controller
 
         Yii::app()->end();
     }
+
+    public function loadModel($id)
+    {
+        if (empty($this->modelClass))
+            $this->modelClass = ucfirst($this->id);
+
+        $model = @call_user_func(array($this->modelClass, 'model'));
+
+        return $model->findByPk($id);
+    }
+
 }

@@ -3,6 +3,7 @@
 class CalendarController extends AdminController
 {
     public $modelClass = 'Task';
+    public $layout = '/layouts/column1';
     
     public function actionIndex()
     {

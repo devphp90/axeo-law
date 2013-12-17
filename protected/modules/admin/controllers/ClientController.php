@@ -2,7 +2,7 @@
 
 class ClientController extends AdminController 
 {
-    public $layout = '/layouts/column2';
+    public $modelClass = 'Client';
     
     public function actionCreate()
     {
@@ -50,14 +50,6 @@ class ClientController extends AdminController
         $this->render('index', array(
             'model' => $model,
         ));
-    }
-
-    public function loadModel($id)
-    {
-        $model = Client::model()->findByPk($id);
-        if ($model === null)
-            throw new CHttpException(404, 'The requested page does not exist.');
-        return $model;
     }
 
 }

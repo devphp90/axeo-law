@@ -2,8 +2,8 @@
 
 class MatterController extends AdminController
 {
-    public $layout = '/layouts/column2';
-
+    public $modelClass = 'Matter';
+    
     public function actionCreate()
     {
         $model = new Matter();
@@ -41,20 +41,6 @@ class MatterController extends AdminController
         ));
     }
 
-    public function actionDelete($id)
-    {
-        if (Yii::app()->request->isPostRequest) {
-            // we only allow deletion via POST request
-            $this->loadModel($id)->delete();
-
-            // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-            if (!isset($_GET['ajax']))
-                $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-        }
-        else
-            throw new CHttpException(400, 'Invalid request. Please do not repeat this request again.');
-    }
-
     public function actionClientView($id)
     {
         $model = new Matter('search');
@@ -81,14 +67,6 @@ class MatterController extends AdminController
         ));
     }
 
-    public function loadModel($id)
-    {
-        $model = Matter::model()->findByPk($id);
-        if ($model === null)
-            throw new CHttpException(404, 'The requested page does not exist.');
-        return $model;
-    }
-    
     public function actionChangeClient()
     {
         if (app()->request->isAjaxRequest) {
