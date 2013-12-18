@@ -61,7 +61,7 @@ $events = $this->getEventData();
                 $.ajax ({
                     url: '<?php echo url("admin/calendar/view") ?>',
                     type: 'GET',
-                    data: {id: event.id},
+                    data: {id: event.id, type: event.type},
                     success: function (response) {
                         $('#view_event .event-content').removeClass('loading');
                         $('#view_event .event-content').html(response);

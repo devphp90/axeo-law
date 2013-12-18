@@ -16,29 +16,59 @@ class CalendarController extends AdminController
     {
         $data = array();
         
-        $criteria = new CDbCriteria();
-        if (user()->isAdmin()) {
-            $criteria->condition = 'office_id = :officeId';
-            $criteria->params = array(':officeId' => user()->officeId);
-        }
-        $events = Task::model()->findAll($criteria);
-        
+        // get data from tasks
+        $tasks = $this->getTasks();
         $taskColor = param('eventColor', 'task');
-        
-        foreach ($events as $key => $event) {
+        foreach ($tasks as $key => $task) {
             $data[] = array(
-                'id' => $event->id,
-                'title' => $event->title,
-                'start' => $event->start_time,
-                'end' => $event->end_time,
-                'allDay' => $event->all_date == Task::ALL_DATE_YES ? true : false,
+                'id' => $task->id,
+                'title' => $task->title,
+                'start' => $task->start_time,
+                'end' => $task->end_time,
+                'allDay' => $task->all_date == Task::ALL_DATE_YES ? true : false,
                 'color' => $taskColor,
+                'type' => 'task',
+            );
+        }
+        
+        // get data from appointment
+        $appointments = $this->getAppointments();
+        $apptColor = param('eventColor', 'appointment');
+        foreach ($appointments as $key => $appointment) {
+            $data[] = array(
+                'id' => $appointment->id,
+                'title' => $appointment->title,
+                'start' => $appointment->start_time,
+                'end' => $appointment->end_time,
+                'allDay' => false,
+                'color' => $apptColor,
+                'type' => 'appointment',
             );
         }
         
         return $data;
     }
     
+    protected function getTasks()
+    {
+        $criteria = new CDbCriteria();
+        if (user()->isAdmin()) {
+            $criteria->condition = 'office_id = :officeId';
+            $criteria->params = array(':officeId' => user()->officeId);
+        }
+        return Task::model()->findAll($criteria);
+    }
+    
+    protected function getAppointments()
+    {
+        $criteria = new CDbCriteria();
+        if (user()->isAdmin()) {
+            $criteria->condition = 'office_id = :officeId';
+            $criteria->params = array(':officeId' => user()->officeId);
+        }
+        return Appointment::model()->findAll($criteria);
+    }
+
     public function actionAdd()
     {
         $model = new Task();
@@ -58,23 +88,28 @@ class CalendarController extends AdminController
     
     public function actionView($id)
     {
-        $event = $this->loadEvent($id);
         if (request()->isAjaxRequest) {
-            $this->renderPartial('view', array('model' => $event));
+            $type = app()->request->getParam('type');
+            switch ($type) {
+                case 'task':
+                    $this->modelClass = 'Task';
+                    $model = $this->loadModel($id);
+                    $this->renderPartial('_task', array('model' => $model));
+                    break;
+                case 'appointment':
+                    $this->modelClass = 'Appointment';
+                    $model = $this->loadModel($id);
+                    $this->renderPartial('_appointment', array('model' => $model));
+                    break;
+                default :
+                    break;
+            }
         }
-    }
-    
-    protected function loadEvent($id)
-    {
-        $event = Task::model()->findByPk($id);
-        if ($event == null)
-            throw new CHttpException(404);
-        return $event;
     }
     
     public function actionEdit($id)
     {
-        $model = $this->loadEvent($id);
+        $model = $this->loadModel($id);
         Utils::ajaxValidation($model, 'event_form');
         if (isset($_POST['Task'])) {
             $model->attributes = $_POST['Task'];
