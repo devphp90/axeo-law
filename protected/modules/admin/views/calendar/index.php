@@ -6,6 +6,19 @@ cs()->registerCssFile('/css/fullcalendar/fullcalendar.css');
 
 $events = $this->getEventData();
 ?>
+
+<!-- Color Notes -->
+<div class="notes" style="padding-bottom: 30px;">
+    <div style="margin:0 10px 0 0;float:right;">
+        <div style="width:15px; height:15px; background:<?php echo param('eventColor', 'task') ?>;float:left; margin:3px 5px 0 0"></div>Task
+    </div>
+    <div style="margin:0 10px 0 0;float:right;">
+        <div style="width:15px; height:15px; background:<?php echo param('eventColor', 'appointment') ?>;float:left; margin:3px 5px 0 0"></div>Appointment
+    </div>
+</div>
+<!-- Color Notes -->
+<div class="clearfix"></div>
+
 <div id='calendar'></div>
 <script>
     function padStr(i)
@@ -37,6 +50,7 @@ $events = $this->getEventData();
                 right: 'agendaWeek,month,agendaDay',
                 selectable: true
             },
+            aspectRatio: 1,
             defaultView: 'agendaWeek',
             editable: true,
             selectable: true,
@@ -74,12 +88,12 @@ $events = $this->getEventData();
                         if (event.type == 'task') {
                             $('#view_event .event-content').removeClass('loading');
                             $('#view_event .event-content').html(response);
-                            $('#view_event').parent().find('.ui-dialog-title').text(event.title);
+                            $('#view_event').parent().find('.ui-dialog-title').text('View Task: ' + event.title);
                             $('#view_event').parent().find('.ui-dialog-buttonset').show();
                         } else {
                             $('#view_appointment .appointment-content').removeClass('loading');
                             $('#view_appointment .appointment-content').html(response);
-                            $('#view_appointment').parent().find('.ui-dialog-title').text(event.title);
+                            $('#view_appointment').parent().find('.ui-dialog-title').text('View Appointment: ' + event.title);
                             $('#view_appointment').parent().find('.ui-dialog-buttonset').show();
                         }
                     }
