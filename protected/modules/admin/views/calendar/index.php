@@ -53,20 +53,35 @@ $events = $this->getEventData();
             },
             eventClick: function (event) {
                 currentId = event.id;
-                $('#view_event .event-content').addClass('loading');
-                $('#view_event .event-content').html('');
-                $('#view_event').dialog('open');
-                $('#view_event').parent().find('.ui-dialog-title').text('Loading...');
-                $('#view_event').parent().find('.ui-dialog-buttonset').hide();
+                if (event.type == 'task') {
+                    $('#view_event .event-content').addClass('loading');
+                    $('#view_event .event-content').html('');
+                    $('#view_event').dialog('open');
+                    $('#view_event').parent().find('.ui-dialog-title').text('Loading...');
+                    $('#view_event').parent().find('.ui-dialog-buttonset').hide();
+                } else {
+                    $('#view_appointment .appointment-content').addClass('loading');
+                    $('#view_appointment .appointment-content').html('');
+                    $('#view_appointment').dialog('open');
+                    $('#view_appointment').parent().find('.ui-dialog-title').text('Loading...');
+                    $('#view_appointment').parent().find('.ui-dialog-buttonset').hide();
+                }
                 $.ajax ({
                     url: '<?php echo url("admin/calendar/view") ?>',
                     type: 'GET',
                     data: {id: event.id, type: event.type},
                     success: function (response) {
-                        $('#view_event .event-content').removeClass('loading');
-                        $('#view_event .event-content').html(response);
-                        $('#view_event').parent().find('.ui-dialog-title').text(event.title);
-                        $('#view_event').parent().find('.ui-dialog-buttonset').show();
+                        if (event.type == 'task') {
+                            $('#view_event .event-content').removeClass('loading');
+                            $('#view_event .event-content').html(response);
+                            $('#view_event').parent().find('.ui-dialog-title').text(event.title);
+                            $('#view_event').parent().find('.ui-dialog-buttonset').show();
+                        } else {
+                            $('#view_appointment .appointment-content').removeClass('loading');
+                            $('#view_appointment .appointment-content').html(response);
+                            $('#view_appointment').parent().find('.ui-dialog-title').text(event.title);
+                            $('#view_appointment').parent().find('.ui-dialog-buttonset').show();
+                        }
                     }
                 });
              }
@@ -159,6 +174,25 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
 ));
 ?>
 <div class="event-content">
+
+</div>
+<?php
+$this->endWidget('zii.widgets.jui.CJuiDialog');
+?>
+
+<?php
+$params = array('model' => $model);
+$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+    'id' => 'view_appointment',
+    'options' => array(
+        'width' => '500',
+        'height' => '300',
+        'title' => 'View Appointment',
+        'autoOpen' => false,
+    ),
+));
+?>
+<div class="appointment-content">
 
 </div>
 <?php
