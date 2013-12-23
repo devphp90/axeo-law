@@ -11,20 +11,15 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 
 <p class="help-block">Fields with <span class="required">*</span> are required.</p>
 
-<?php
-if (user()->isAdmin())
-    $clients = Client::model()->findAll('office_id = :officeId', array(':officeId' => user()->officeId));
-else 
-    $clients = Client::model()->findAll();
+<?php 
+$this->widget('bootstrap.widgets.TbTabs', array(
+    'type' => 'tabs',
+    'tabs' => array(
+        array('label' => 'Matter Info', 'content' => $this->renderPartial('_form_basic', array('form' => $form, 'model' => $model), true), 'active' => true),
+        array('label' => 'Key Date', 'content' => $this->renderPartial('_form_key_date', array('form' => $form, 'keyDate' => $keyDate), true)),
+    )
+));
 ?>
-
-<?php echo $form->dropdownListRow($model, 'client_id', CHtml::listData($clients, 'id', 'name'), array('class' => 'span5', 'empty' => '-- Select Client --')); ?>
-
-<?php echo $form->hiddenField($model, 'office_id'); ?>
-
-<?php echo $form->textFieldRow($model, 'name', array('class' => 'span5', 'maxlength' => 255)); ?>
-
-    <?php echo $form->textFieldRow($model, 'phone', array('class' => 'span5', 'maxlength' => 255)); ?>
 
 <div class="form-actions">
     <?php

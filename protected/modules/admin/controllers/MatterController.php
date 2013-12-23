@@ -7,37 +7,51 @@ class MatterController extends AdminController
     public function actionCreate()
     {
         $model = new Matter();
+        $keyDate = new KeyDate('create');
         
         if (user()->isAdmin())
             $model->office_id = user()->officeId;
 
-        Utils::ajaxValidation($model, 'matter-form');
+        Utils::ajaxValidation(array($keyDate, $model), 'matter-form');
+        
+        if (isset($_POST['KeyDate']))
+            $keyDate->attributes = $_POST['KeyDate'];
         
         if (isset($_POST['Matter'])) {
             $model->attributes = $_POST['Matter'];
-            if ($model->save())
-                $this->redirect(array('view', 'id' => $model->id));
+            if ($keyDate->validate() && $model->save()) {
+                $keyDate->matter_id = $model->id;
+                $keyDate->office_id = $model->office_id;
+                if ($keyDate->save())
+                    $this->redirect(array('view', 'id' => $model->id));
+            }
         }
 
         $this->render('create', array(
             'model' => $model,
+            'keyDate' => $keyDate
         ));
     }
 
     public function actionUpdate($id)
     {
         $model = $this->loadModel($id);
+        $keyDate = $model->keyDate;
 
-        Utils::ajaxValidation($model, 'matter-form');
+        Utils::ajaxValidation(array($keyDate, $model), 'matter-form');
 
+        if (isset($_POST['KeyDate']))
+            $keyDate->attributes = $_POST['KeyDate'];
+        
         if (isset($_POST['Matter'])) {
             $model->attributes = $_POST['Matter'];
-            if ($model->save())
+            if ($keyDate->save() && $model->save())
                 $this->redirect(array('view', 'id' => $model->id));
         }
 
         $this->render('update', array(
             'model' => $model,
+            'keyDate' => $keyDate
         ));
     }
 

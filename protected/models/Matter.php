@@ -38,7 +38,7 @@ class Matter extends ActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('name, office_id', 'required'),
+            array('name, office_id, client_id', 'required'),
             array('name', 'length', 'max' => 255),
             array('phone', 'length', 'max' => 255),
             array('client_id, office_id', 'numerical', 'integerOnly' => true),
@@ -57,6 +57,7 @@ class Matter extends ActiveRecord
         // class name for the relations automatically generated below.
         return array(
             'client' => array(self::BELONGS_TO, 'Client', 'client_id'),
+            'keyDate' => array(self::HAS_ONE, 'KeyDate', 'matter_id'),
         );
     }
 

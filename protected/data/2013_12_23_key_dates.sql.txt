@@ -1,0 +1,13 @@
+CREATE TABLE IF NOT EXISTS `key_dates` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `office_id` int(11) NOT NULL,
+  `matter_id` int(11) NOT NULL,
+  `title` varchar(32) NOT NULL,
+  `description` text NULL,
+  `start_date` datetime NOT NULL,
+  `end_date` datetime NOT NULL,
+  `updated_date` int(10) NULL,
+  `created_date` int(10) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+);
