@@ -46,6 +46,21 @@ class CalendarController extends AdminController
             );
         }
         
+        // get data from appointment
+        $keyDates = $this->getKeyDates();
+        $keyDateColor = param('eventColor', 'keyDate');
+        foreach ($keyDates as $key => $keyDate) {
+            $data[] = array(
+                'id' => $keyDate->id,
+                'title' => $keyDate->title,
+                'start' => $keyDate->start_date,
+                'end' => $keyDate->end_date,
+                'allDay' => false,
+                'color' => $keyDateColor,
+                'type' => 'keyDate',
+            );
+        }
+        
         return $data;
     }
     
@@ -67,6 +82,16 @@ class CalendarController extends AdminController
             $criteria->params = array(':officeId' => user()->officeId);
         }
         return Appointment::model()->findAll($criteria);
+    }
+    
+    protected function getKeyDates()
+    {
+        $criteria = new CDbCriteria();
+        if (user()->isAdmin()) {
+            $criteria->condition = 'office_id = :officeId';
+            $criteria->params = array(':officeId' => user()->officeId);
+        }
+        return KeyDate::model()->findAll($criteria);
     }
 
     public function actionAdd()
@@ -94,12 +119,17 @@ class CalendarController extends AdminController
                 case 'task':
                     $this->modelClass = 'Task';
                     $model = $this->loadModel($id);
-                    $this->renderPartial('_task', array('model' => $model));
+                    $this->renderPartial('_view_task', array('model' => $model));
                     break;
                 case 'appointment':
                     $this->modelClass = 'Appointment';
                     $model = $this->loadModel($id);
-                    $this->renderPartial('_appointment', array('model' => $model));
+                    $this->renderPartial('_view_appointment', array('model' => $model));
+                    break;
+                case 'keyDate':
+                    $this->modelClass = 'KeyDate';
+                    $model = $this->loadModel($id);
+                    $this->renderPartial('_view_key_date', array('model' => $model));
                     break;
                 default :
                     break;
