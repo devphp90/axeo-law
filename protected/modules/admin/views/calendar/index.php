@@ -1,7 +1,7 @@
 <?php
 cs()->registerCoreScript('jquery.ui');
-cs()->registerScriptFile('/js/fullcalendar/fullcalendar.min.js');
-cs()->registerCssFile('/css/fullcalendar/fullcalendar.css');
+cs()->registerScriptFile(Yii::app()->request->baseUrl . '/js/fullcalendar/fullcalendar.min.js');
+cs()->registerCssFile(Yii::app()->request->baseUrl . '/css/fullcalendar/fullcalendar.css');
 //cs()->registerCssFile('/css/fullcalendar/fullcalendar.print.css');
 
 $events = $this->getEventData();
