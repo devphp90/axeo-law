@@ -26,17 +26,17 @@
 	                array(
 	                	'label'=>Yii::t('app','User'), 
 	                	'url'=>array('/backend/user'),
-	                	'visible'=>Yii::app()->user->isAccount(),
+	                	'visible'=>Yii::app()->user->isAdmin(),
 	                ),
 	                 array(
 	                	'label'=>Yii::t('app','Role'), 
 	                	'url'=>array('/backend/role'),
-	                	'visible'=>Yii::app()->user->isAccount(),
+	                	'visible'=>Yii::app()->user->isAdmin(),
 	                ),
 	                array(
 	                	'label'=>Yii::t('app','UI Demo'), 
 	                	'url'=>array('/backend/default/uidemo'),
-	                	'visiable'=>Yii::app()->user->isAccount(),
+	                	'visiable'=>Yii::app()->user->isAdmin(),
 	                ),
 	            ),
 	        ),

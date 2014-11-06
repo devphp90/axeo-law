@@ -54,7 +54,7 @@ class DefaultController extends AdminController
             $model->attributes = $_POST['AdminLoginForm'];
             // validate user input and redirect to the previous page if valid
             if ($model->validate() && $model->login())
-                $this->redirect('/admin/default/index');
+                $this->redirect(Yii::app()->createAbsoluteUrl('/admin/default/index'));
         }
         // display the login form
         $this->render('login', array('model' => $model));

@@ -69,7 +69,7 @@ return array(
             'itemTable' => 'auth_item',
         ),
         'db' => array(
-            'connectionString' => 'mysql:host=localhost;dbname=law',
+            'connectionString' => 'mysql:host=localhost;dbname=axeo_law',
             'emulatePrepare' => true,
             'username' => 'root',
             'password' => '',
